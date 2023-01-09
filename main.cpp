@@ -32,9 +32,12 @@ void setMenu(MainWindow *w) {
     MainWindow::connect(openAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
         auto path = selectFile(nullptr);
-        bool isSetOk = setCurrentPath(path);
-        if (!isSetOk) {
-            return;
+        SetSignal setStat = setCurrentPath(path);
+        if (setStat == Invalid) return;
+
+        if (setStat == Same) {
+            auto rst = QMessageBox::information(nullptr, "Reload", "Reload file?", QMessageBox::Ok | QMessageBox::Cancel);
+            if (rst == QMessageBox::Cancel) return;
         }
         auto rs = readAllText(getCurrentPath());
         if (rs.ok) {
@@ -46,9 +49,14 @@ void setMenu(MainWindow *w) {
     });
 
 
-    auto *saveAsAct = new QAction("&Open", w);
+    auto *saveAsAct = new QAction("&Save as", w);
     MainWindow::connect(saveAsAct, &QAction::triggered, qApp, []{
         if (txt == nullptr) return;
+        auto path = selectNewFile(nullptr);
+        bool isOk = writeAllText(path, txt->toPlainText());
+        if (!isOk) {
+            QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+        }
     });
 
     menuFile->addAction(openAct);

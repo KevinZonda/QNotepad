@@ -6,7 +6,13 @@
 
 QString getCurrentPath();
 
-bool setCurrentPath(QString);
+enum SetSignal {
+    Ok,
+    Same,
+    Invalid
+};
+
+SetSignal setCurrentPath(QString);
 
 bool hasPath();
 

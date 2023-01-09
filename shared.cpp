@@ -6,11 +6,12 @@ QString getCurrentPath(){
     return currentPath;
 }
 
-bool setCurrentPath(QString p){
+SetSignal setCurrentPath(QString p){
     auto np = p.trimmed();
-    if (np == currentPath || np.isEmpty()) return false;
+    if (np.isEmpty()) return Invalid;
+    if (np == currentPath) return Same;
     currentPath = np;
-    return true;
+    return Ok;
 }
 
 bool hasPath(){

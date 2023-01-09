@@ -13,4 +13,15 @@ struct ReadStatus {
     bool ok;
 };
 
+
+QString selectNewFile(QWidget *parent);
+
+enum Encoding {
+    UTF8,
+    ASNI,
+    UTF16
+};
+
+bool writeAllText(QString path, QString content, Encoding encoding = UTF8);
+
 #endif // IO_H
