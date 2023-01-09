@@ -6,9 +6,11 @@ QString getCurrentPath(){
     return currentPath;
 }
 
-QString setCurrentPath(QString p){
-    currentPath = p.trimmed();
-    return p;
+bool setCurrentPath(QString p){
+    auto np = p.trimmed();
+    if (np == currentPath || np.isEmpty()) return false;
+    currentPath = np;
+    return true;
 }
 
 bool hasPath(){

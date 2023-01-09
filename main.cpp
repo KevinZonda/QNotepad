@@ -7,6 +7,7 @@
 #include "ui_mainwindow.h"
 
 #include <QApplication>
+#include <QMessageBox>
 
 static QPlainTextEdit* txt = nullptr;
 
@@ -28,10 +29,20 @@ void setMenu(MainWindow *w) {
     });
 
     auto *openAct = new QAction("&Open", w);
-    MainWindow::connect(openAct, &QAction::triggered, qApp, []{
+    MainWindow::connect(openAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
         auto path = selectFile(nullptr);
-        txt->setPlainText(path);
+        bool isSetOk = setCurrentPath(path);
+        if (!isSetOk) {
+            return;
+        }
+        auto rs = readAllText(getCurrentPath());
+        if (rs.ok) {
+            txt->setPlainText(rs.text);
+            w->updateTitle();
+        } else {
+            QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
+        }
     });
 
 

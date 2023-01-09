@@ -8,3 +8,20 @@ QString selectFile(QWidget *parent) {
                 QDir::currentPath());
     return file;
 }
+
+
+struct ReadStatus readAllText(QString path) {
+    struct ReadStatus x;
+    x.text = "";
+
+    QFile f(path);
+    if (!f.open(QFile::ReadOnly | QFile::Text)) {
+        x.ok = false;
+        return x;
+    }
+    QTextStream in(&f);
+    x.text = in.readAll();
+    x.ok = true;
+    f.close();
+    return x;
+}

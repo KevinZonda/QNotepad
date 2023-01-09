@@ -6,7 +6,7 @@
 
 QString getCurrentPath();
 
-QString setCurrentPath(QString);
+bool setCurrentPath(QString);
 
 bool hasPath();
 
