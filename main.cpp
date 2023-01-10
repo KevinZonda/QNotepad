@@ -86,10 +86,18 @@ void setMenu(MainWindow *w) {
         loadFile(w);
     });
 
+    auto *exitAct = new QAction("&Exit", w);
+    MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{
+        if (txt == nullptr || !hasPath()) return;
+        w->close();
+        exit(0);
+    });
+
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);
     menuFile->addAction(reloadAct);
+    menuFile->addAction(exitAct);
 
     w->menuBar()->addMenu(menuFile);
     w->menuBar()->addMenu(menuEdit);
