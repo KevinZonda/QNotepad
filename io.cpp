@@ -1,11 +1,20 @@
 #include "io.h"
+#include "shared.h"
 #include <QFileDialog>
+
+QString getTargetPath() {
+    if (hasPath()) {
+        QFileInfo fi(getCurrentPath());
+        return fi.absolutePath();
+    }
+    return QDir::currentPath();
+}
 
 QString selectFile(QWidget *parent) {
     QString file = QFileDialog::getOpenFileName(
                 parent,
                 QFileDialog::tr("Open File"),
-                QDir::currentPath());
+                getTargetPath());
     return file;
 }
 
@@ -13,7 +22,7 @@ QString selectNewFile(QWidget *parent) {
     QString file = QFileDialog::getSaveFileName(
                 parent,
                 QFileDialog::tr("Save to"),
-                QDir::currentPath());
+                getTargetPath());
     return file;
 }
 
