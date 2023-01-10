@@ -15,26 +15,31 @@ static QPlainTextEdit* txt = nullptr;
 void setMenu(MainWindow *w) {
     w->menuBar()->setNativeMenuBar(false);
 
+    //region Edit
+
     QMenu* menuEdit = w->menuBar()->addMenu("&Edit");
+
     auto *undoAct = new QAction("&Undo", w);
-    MainWindow::connect(undoAct, &QAction::triggered, qApp, []{
-        if (txt == nullptr) return;
-        txt->undo();
-    });
-    menuEdit->addAction(undoAct);
+    MainWindow::connect(undoAct, &QAction::triggered, qApp, []{ txt->undo(); });
+
     auto *redoAct = new QAction("&Redo", w);
-    MainWindow::connect(redoAct, &QAction::triggered, qApp, []{
-        if (txt == nullptr) return;
-        txt->redo();
-    });
+    MainWindow::connect(redoAct, &QAction::triggered, qApp, []{ txt->redo(); });
+
+    auto *clearAct = new QAction("&Clear", w);
+    MainWindow::connect(clearAct, &QAction::triggered, qApp, []{ txt->setPlainText(""); });
+
+    //endregion
+
+    menuEdit->addAction(undoAct);
     menuEdit->addAction(redoAct);
+    menuEdit->addAction(clearAct);
+
+    //region File
 
     QMenu* menuFile = w->menuBar()->addMenu("&File");
     auto *saveAct = new QAction("&Save", w);
     MainWindow::connect(saveAct, &QAction::triggered, qApp, [w]{
-        if (txt == nullptr) return;
-        bool isOk = w->save();
-        if (!isOk) {
+        if (!w->save()) {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
         }
     });
@@ -50,7 +55,6 @@ void setMenu(MainWindow *w) {
 
     auto *openAct = new QAction("&Open", w);
     MainWindow::connect(openAct, &QAction::triggered, qApp, [w]{
-        if (txt == nullptr) return;
         auto path = selectFile(nullptr);
         SetSignal setStat = setCurrentPath(path);
         if (setStat == Invalid) return;
@@ -67,7 +71,6 @@ void setMenu(MainWindow *w) {
 
     auto *saveAsAct = new QAction("&Save as", w);
     MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{
-        if (txt == nullptr) return;
         auto path = selectNewFile(nullptr);
         if (path.isEmpty()) return;
         bool isOk = w->save(path);
@@ -79,17 +82,14 @@ void setMenu(MainWindow *w) {
     });
 
     auto *reloadAct = new QAction("&Reload", w);
-    MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{
-        if (txt == nullptr || !hasPath()) return;
-        w->loadFile();
-    });
+    MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{ w->loadFile(); });
 
     auto *exitAct = new QAction("&Exit", w);
     MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{
-        if (txt == nullptr || !hasPath()) return;
         // TODO
 
     });
+    //region file
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
