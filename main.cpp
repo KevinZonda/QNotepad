@@ -11,6 +11,19 @@
 
 static QPlainTextEdit* txt = nullptr;
 
+bool loadFile(MainWindow *w) {
+    auto rs = readAllText(getCurrentPath());
+    if (rs.ok) {
+        auto x = getCrLf(rs.text);
+        w->setNextLine(x);
+        txt->setPlainText(rs.text);
+        return true;
+    }
+
+    QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
+    return false;
+}
+
 void setMenu(MainWindow *w) {
     w->menuBar()->setNativeMenuBar(false);
 
@@ -21,6 +34,12 @@ void setMenu(MainWindow *w) {
         txt->undo();
     });
     menuEdit->addAction(undoAct);
+    auto *redoAct = new QAction("&Redo", w);
+    MainWindow::connect(redoAct, &QAction::triggered, qApp, []{
+        if (txt == nullptr) return;
+        txt->redo();
+    });
+    menuEdit->addAction(redoAct);
 
     QMenu* menuFile = w->menuBar()->addMenu("&File");
     auto *saveAct = new QAction("&Save", w);
@@ -39,13 +58,9 @@ void setMenu(MainWindow *w) {
             auto rst = QMessageBox::information(nullptr, "Reload", "Reload file?", QMessageBox::Ok | QMessageBox::Cancel);
             if (rst == QMessageBox::Cancel) return;
         }
-        auto rs = readAllText(getCurrentPath());
-        if (rs.ok) {
-            txt->setPlainText(rs.text);
-            w->updateTitle();
-        } else {
-            QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
-        }
+        bool isOk = loadFile(w);
+        if (isOk) w->updateTitle();
+
     });
 
 
@@ -59,17 +74,23 @@ void setMenu(MainWindow *w) {
         }
     });
 
+    auto *reloadAct = new QAction("&Reload", w);
+    MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{
+        if (txt == nullptr || !hasPath()) return;
+        loadFile(w);
+    });
+
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);
-
+    menuFile->addAction(reloadAct);
 
     w->menuBar()->addMenu(menuFile);
     w->menuBar()->addMenu(menuEdit);
 }
 
 
-bool isModified;
+bool isEdited = false;
 
 int main(int argc, char *argv[])
 {

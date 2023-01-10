@@ -16,6 +16,8 @@ set(PROJECT_SOURCES
         main.cpp
         shared.h
         shared.cpp
+        text.h
+        text.cpp
         io.h
         io.cpp
         mainwindow.cpp

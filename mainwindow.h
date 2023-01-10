@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "text.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -16,7 +17,10 @@ public:
     ~MainWindow();
     Ui::MainWindow *ui;
     void updateTitle();
-
+    bool isModified = false;
+    void setNextLine(NextLineWay);
+    NextLineWay getNextLine();
 private:
+    NextLineWay currentNextLine = Unknown;
 };
 #endif // MAINWINDOW_H

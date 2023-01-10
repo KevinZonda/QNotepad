@@ -20,3 +20,26 @@ void MainWindow::updateTitle() {
                       ? "QNotepad - " + getCurrentPath()
                       : "QNotepad");
 }
+
+void MainWindow::setNextLine(NextLineWay x) {
+    this->currentNextLine = x;
+    const char* msg;
+    switch(x) {
+    case CRLF:
+        msg = "CRLF";
+        break;
+    case LF:
+        msg = "LF";
+        break;
+    default:
+        msg = "Unknown";
+        break;
+    }
+
+    this->ui->statusbar->showMessage(msg);
+
+}
+
+NextLineWay MainWindow::getNextLine() {
+    return this->currentNextLine;
+}
