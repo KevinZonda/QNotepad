@@ -32,7 +32,7 @@ struct ReadStatus readAllText(QString path) {
     x.text = "";
 
     QFile f(path);
-    if (!f.open(QFile::ReadOnly | QFile::Text)) {
+    if (!f.open(QFile::ReadOnly)) {
         x.ok = false;
         return x;
     }
@@ -45,7 +45,7 @@ struct ReadStatus readAllText(QString path) {
 
 bool writeAllText(QString path, QString content, Encoding encoding) {
     QFile f(path);
-    if (!f.open(QFile::WriteOnly | QFile::Text)) {
+    if (!f.open(QFile::WriteOnly)) {
         return false;
     }
     f.write(content.toUtf8());

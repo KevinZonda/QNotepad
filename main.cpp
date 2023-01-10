@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
     }
 
     w.updateTitle();
+
     txt = w.ui->txtContent;
 
     w.show();
