@@ -66,14 +66,15 @@ NextLineWay MainWindow::getNextLine() {
 }
 
 bool MainWindow::loadFile() {
+    if (!hasPath()) return false;
     this->isLoading = true;
     auto rs = readAllText(getCurrentPath());
     if (rs.ok) {
+        ui->txtContent->setPlainText(rs.text);
         auto x = getCrLf(rs.text);
         this->setNextLine(x);
-        ui->txtContent->setPlainText(rs.text);
         this->isLoading = false;
-        this->isModified = false;
+        this->setModify(false);
         return true;
     }
     this->isLoading = false;
