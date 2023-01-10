@@ -3,6 +3,7 @@
 #include "io.h"
 #include "shared.h"
 #include <QMessageBox>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,8 +33,10 @@ void MainWindow::updateTitle(bool isModifyCalled) {
             return;
         this->setWindowTitle("*" + title);
     }
+    QFileInfo info(getCurrentPath());
+
     QString title = hasPath()
-            ? "QNotepad - " + getCurrentPath()
+            ? "QNotepad - " + info.fileName()
             : "QNotepad";
     title = this->isModified ? "*" + title : title;
     this->setWindowTitle(title);
