@@ -7,6 +7,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QObject::connect(ui->txtContent, &QPlainTextEdit::modificationChanged, this,
+                [this](bool m) {
+                    if (isLoading) return;
+                    this->isModified = true;
+                    updateTitle();
+                }
+    );
+
 }
 
 MainWindow::~MainWindow()
@@ -15,10 +23,18 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::updateTitle() {
-    this->setWindowTitle(hasPath()
-                      ? "QNotepad - " + getCurrentPath()
-                      : "QNotepad");
+void MainWindow::updateTitle(bool isModifyCalled) {
+    if (isModifyCalled) {
+        auto title = this->windowTitle();
+        if (this->isModified && title.startsWith("*"))
+            return;
+        this->setWindowTitle("*" + title);
+    }
+    QString title = hasPath()
+            ? "QNotepad - " + getCurrentPath()
+            : "QNotepad";
+    title = this->isModified ? "*" + title : title;
+    this->setWindowTitle(title);
 }
 
 void MainWindow::setNextLine(NextLineWay x) {

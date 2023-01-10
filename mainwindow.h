@@ -16,10 +16,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Ui::MainWindow *ui;
-    void updateTitle();
+    void updateTitle(bool isModifyCalled = false);
     bool isModified = false;
     void setNextLine(NextLineWay);
     NextLineWay getNextLine();
+    bool isLoading = false;
 private:
     NextLineWay currentNextLine = Unknown;
 };

@@ -12,14 +12,17 @@
 static QPlainTextEdit* txt = nullptr;
 
 bool loadFile(MainWindow *w) {
+    w->isLoading = true;
     auto rs = readAllText(getCurrentPath());
     if (rs.ok) {
         auto x = getCrLf(rs.text);
         w->setNextLine(x);
         txt->setPlainText(rs.text);
+        w->isLoading = false;
+        w->isModified = false;
         return true;
     }
-
+    w->isLoading = false;
     QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
     return false;
 }
@@ -118,7 +121,6 @@ int main(int argc, char *argv[])
 
     w.updateTitle();
     txt = w.ui->txtContent;
-    txt->setPlainText("OK!");
 
     w.show();
     return a.exec();
