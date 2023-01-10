@@ -16,4 +16,6 @@ SetSignal setCurrentPath(QString);
 
 bool hasPath();
 
+void clearCurrentPath();
+
 #endif // SHARED_H

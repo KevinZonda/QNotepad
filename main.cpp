@@ -39,6 +39,15 @@ void setMenu(MainWindow *w) {
         }
     });
 
+    auto *newAct = new QAction("&New", w);
+    MainWindow::connect(newAct, &QAction::triggered, qApp, [w]{
+        // TODO: Save current
+        clearCurrentPath();
+        txt->setPlainText("");
+        w->isModified = false;
+        w->updateTitle();
+    });
+
     auto *openAct = new QAction("&Open", w);
     MainWindow::connect(openAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
@@ -60,6 +69,7 @@ void setMenu(MainWindow *w) {
     MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
         auto path = selectNewFile(nullptr);
+        if (path.isEmpty()) return;
         bool isOk = w->save(path);
         if (!isOk) {
             setCurrentPath(path);
@@ -81,6 +91,7 @@ void setMenu(MainWindow *w) {
 
     });
 
+    menuFile->addAction(newAct);
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);

@@ -2,6 +2,10 @@
 
 QString currentPath = "";
 
+void clearCurrentPath() {
+    currentPath = "";
+}
+
 QString getCurrentPath(){
     return currentPath;
 }
