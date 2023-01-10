@@ -21,7 +21,11 @@ public:
     void setNextLine(NextLineWay);
     NextLineWay getNextLine();
     bool isLoading = false;
+    bool loadFile();
+    bool save(QString path);
+    bool save();
 private:
     NextLineWay currentNextLine = Unknown;
+    void closeEvent(QCloseEvent *event);
 };
 #endif // MAINWINDOW_H

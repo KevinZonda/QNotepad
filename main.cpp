@@ -11,21 +11,6 @@
 
 static QPlainTextEdit* txt = nullptr;
 
-bool loadFile(MainWindow *w) {
-    w->isLoading = true;
-    auto rs = readAllText(getCurrentPath());
-    if (rs.ok) {
-        auto x = getCrLf(rs.text);
-        w->setNextLine(x);
-        txt->setPlainText(rs.text);
-        w->isLoading = false;
-        w->isModified = false;
-        return true;
-    }
-    w->isLoading = false;
-    QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
-    return false;
-}
 
 void setMenu(MainWindow *w) {
     w->menuBar()->setNativeMenuBar(false);
@@ -46,9 +31,9 @@ void setMenu(MainWindow *w) {
 
     QMenu* menuFile = w->menuBar()->addMenu("&File");
     auto *saveAct = new QAction("&Save", w);
-    MainWindow::connect(saveAct, &QAction::triggered, qApp, []{
+    MainWindow::connect(saveAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
-        bool isOk = writeAllText(getCurrentPath(), txt->toPlainText());
+        bool isOk = w->save();
         if (!isOk) {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
         }
@@ -65,7 +50,7 @@ void setMenu(MainWindow *w) {
             auto rst = QMessageBox::information(nullptr, "Reload", "Reload file?", QMessageBox::Ok | QMessageBox::Cancel);
             if (rst == QMessageBox::Cancel) return;
         }
-        bool isOk = loadFile(w);
+        bool isOk = w->loadFile();
         if (isOk) w->updateTitle();
 
     });
@@ -75,7 +60,7 @@ void setMenu(MainWindow *w) {
     MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
         auto path = selectNewFile(nullptr);
-        bool isOk = writeAllText(path, txt->toPlainText());
+        bool isOk = w->save(path);
         if (!isOk) {
             setCurrentPath(path);
             w->updateTitle();
@@ -86,7 +71,7 @@ void setMenu(MainWindow *w) {
     auto *reloadAct = new QAction("&Reload", w);
     MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr || !hasPath()) return;
-        loadFile(w);
+        w->loadFile();
     });
 
     auto *exitAct = new QAction("&Exit", w);
@@ -106,9 +91,6 @@ void setMenu(MainWindow *w) {
     w->menuBar()->addMenu(menuEdit);
 }
 
-
-bool isEdited = false;
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -117,6 +99,7 @@ int main(int argc, char *argv[])
 
     if (argc > 1) {
         setCurrentPath(QString(argv[1]));
+        w.loadFile();
     }
 
     w.updateTitle();
