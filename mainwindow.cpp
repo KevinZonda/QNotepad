@@ -53,7 +53,7 @@ void MainWindow::setNextLine(NextLineWay x) {
         msg = "LF";
         break;
     default:
-        msg = "Unknown";
+        msg = "Unknown (LF)";
         break;
     }
 
@@ -82,11 +82,12 @@ bool MainWindow::loadFile() {
 }
 
 bool MainWindow::save(QString path) {
-    bool isOk = writeAllText(path, ui->txtContent->toPlainText());
-    if (isOk) {
-        this->isModified = false;
-        this->updateTitle();
-    }
+    auto t = ui->txtContent->toPlainText();
+    t = this->getNextLine() == CRLF ? toCrLf(t) : toLf(t);
+    bool isOk = writeAllText(path, t);
+    if (!isOk) return isOk;
+    this->isModified = false;
+    this->updateTitle();
     auto cursor = this->ui->txtContent->textCursor();
     this->loadFile();
     this->ui->txtContent->setTextCursor(cursor);

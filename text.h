@@ -11,4 +11,12 @@ enum NextLineWay {
 
 NextLineWay getCrLf(QString);
 
+QString toLf(NextLineWay, QString);
+
+QString toCrLf(NextLineWay, QString);
+
+QString toLf(QString);
+
+QString toCrLf(QString);
+
 #endif // TEXT_H

@@ -28,11 +28,29 @@ void setMenu(MainWindow *w) {
     auto *clearAct = new QAction("&Clear", w);
     MainWindow::connect(clearAct, &QAction::triggered, qApp, []{ txt->setPlainText(""); });
 
+    auto *toLFAct  = new QAction("&To LF", w);
+    MainWindow::connect(toLFAct, &QAction::triggered, qApp, [w]{
+        if (w->getNextLine() == LF) return;
+        w->isModified = true;
+        w->setNextLine(LF);
+        w->updateTitle();
+    });
+    auto *toCRLFAct  = new QAction("&To CRLF", w);
+    MainWindow::connect(toCRLFAct, &QAction::triggered, qApp, [w]{
+        if (w->getNextLine() == CRLF) return;
+        w->isModified = true;
+        w->setNextLine(CRLF);
+        w->updateTitle();
+    });
+
+
     //endregion
 
     menuEdit->addAction(undoAct);
     menuEdit->addAction(redoAct);
     menuEdit->addAction(clearAct);
+    menuEdit->addAction(toLFAct);
+    menuEdit->addAction(toCRLFAct);
 
     //region File
 
@@ -42,6 +60,7 @@ void setMenu(MainWindow *w) {
         if (!w->save()) {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
         }
+        return;
     });
 
     auto *newAct = new QAction("&New", w);
