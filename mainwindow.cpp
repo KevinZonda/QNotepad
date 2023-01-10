@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->txtContent, &QPlainTextEdit::modificationChanged, this,
                 [this](bool m) {
                     if (isLoading) return;
-                    this->isModified = true;
+                    this->setModify(m);
                     updateTitle();
                 }
     );
@@ -86,8 +86,7 @@ bool MainWindow::save(QString path) {
     t = this->getNextLine() == CRLF ? toCrLf(t) : toLf(t);
     bool isOk = writeAllText(path, t);
     if (!isOk) return isOk;
-    this->isModified = false;
-    this->updateTitle();
+    this->setModify(false);
     auto cursor = this->ui->txtContent->textCursor();
     this->loadFile();
     this->ui->txtContent->setTextCursor(cursor);
@@ -132,4 +131,16 @@ bool MainWindow::preclose() {
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (this->preclose()) event->accept();
     else event->ignore();
+}
+
+void MainWindow::setModify(bool modifyState, bool updateTitle) {
+    if (this->isModified == modifyState) return;
+    this->isModified = modifyState;
+    if (!updateTitle) return;
+    if (this->isModified) this->updateTitle(true);
+    else this->updateTitle(false);
+}
+
+bool MainWindow::getModify() {
+    return this->isModified;
 }

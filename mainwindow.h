@@ -17,10 +17,11 @@ public:
     ~MainWindow();
     Ui::MainWindow *ui;
     void updateTitle(bool isModifyCalled = false);
-    bool isModified = false;
     void setNextLine(NextLineWay);
     NextLineWay getNextLine();
     bool isLoading = false;
+    void setModify(bool modifyState, bool updateTitle = true);
+    bool getModify();
     bool loadFile();
     bool save(QString path);
     bool save();
@@ -28,5 +29,6 @@ public:
 private:
     NextLineWay currentNextLine = Unknown;
     void closeEvent(QCloseEvent *event);
+    bool isModified = false;
 };
 #endif // MAINWINDOW_H

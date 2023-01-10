@@ -31,16 +31,14 @@ void setMenu(MainWindow *w) {
     auto *toLFAct  = new QAction("&To LF", w);
     MainWindow::connect(toLFAct, &QAction::triggered, qApp, [w]{
         if (w->getNextLine() == LF) return;
-        w->isModified = true;
         w->setNextLine(LF);
-        w->updateTitle();
+        w->setModify(true);
     });
     auto *toCRLFAct  = new QAction("&To CRLF", w);
     MainWindow::connect(toCRLFAct, &QAction::triggered, qApp, [w]{
         if (w->getNextLine() == CRLF) return;
-        w->isModified = true;
         w->setNextLine(CRLF);
-        w->updateTitle();
+        w->setModify(true);
     });
 
 
@@ -68,8 +66,7 @@ void setMenu(MainWindow *w) {
         // TODO: Save current
         clearCurrentPath();
         txt->setPlainText("");
-        w->isModified = false;
-        w->updateTitle();
+        w->setModify(false);
     });
 
     auto *openAct = new QAction("&Open", w);
