@@ -19,7 +19,6 @@ public:
     void updateTitle(bool isModifyCalled = false);
     void setNextLine(NextLineWay);
     NextLineWay getNextLine();
-    bool isLoading = false;
     void setModify(bool modifyState, bool updateTitle = true);
     bool getModify();
     bool loadFile();

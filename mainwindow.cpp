@@ -12,9 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QObject::connect(ui->txtContent, &QPlainTextEdit::modificationChanged, this,
                 [this](bool m) {
-                    if (isLoading) return;
                     this->setModify(m);
-                    updateTitle();
                 }
     );
 
@@ -67,17 +65,13 @@ NextLineWay MainWindow::getNextLine() {
 
 bool MainWindow::loadFile() {
     if (!hasPath()) return false;
-    this->isLoading = true;
     auto rs = readAllText(getCurrentPath());
     if (rs.ok) {
         ui->txtContent->setPlainText(rs.text);
         auto x = getCrLf(rs.text);
         this->setNextLine(x);
-        this->isLoading = false;
-        this->setModify(false);
         return true;
     }
-    this->isLoading = false;
     QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
     return false;
 }
