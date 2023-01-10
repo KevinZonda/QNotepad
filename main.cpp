@@ -69,7 +69,7 @@ void setMenu(MainWindow *w) {
 
 
     auto *saveAsAct = new QAction("&Save as", w);
-    MainWindow::connect(saveAsAct, &QAction::triggered, qApp, []{
+    MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr) return;
         auto path = selectNewFile(nullptr);
         bool isOk = writeAllText(path, txt->toPlainText());
@@ -87,10 +87,10 @@ void setMenu(MainWindow *w) {
     });
 
     auto *exitAct = new QAction("&Exit", w);
-    MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{
+    MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{
         if (txt == nullptr || !hasPath()) return;
-        w->close();
-        exit(0);
+        // TODO
+
     });
 
     menuFile->addAction(openAct);
