@@ -63,7 +63,7 @@ void setMenu(MainWindow *w) {
 
     auto *newAct = new QAction("&New", w);
     MainWindow::connect(newAct, &QAction::triggered, qApp, [w]{
-        // TODO: Save current
+        if (!w->preclose()) return;
         clearCurrentPath();
         txt->setPlainText("");
         w->setModify(false);
