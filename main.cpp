@@ -45,6 +45,10 @@ void setMenu(MainWindow *w) {
     auto *saveAct = new QAction("&Save", w);
     MainWindow::connect(saveAct, &QAction::triggered, qApp, []{
         if (txt == nullptr) return;
+        bool isOk = writeAllText(getCurrentPath(), txt->toPlainText());
+        if (!isOk) {
+            QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+        }
     });
 
     auto *openAct = new QAction("&Open", w);
