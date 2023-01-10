@@ -90,12 +90,12 @@ void setMenu(MainWindow *w) {
         auto path = selectNewFile(nullptr);
         if (path.isEmpty()) return;
         bool isOk = w->save(path);
-        if (isOk) {
-            setCurrentPath(path);
-            w->updateTitle();
-        } else {
+        if (!isOk) {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+            return;
+
         }
+        setCurrentPath(path);
     });
 
     auto *reloadAct = new QAction("&Reload", w);
