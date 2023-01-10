@@ -74,6 +74,8 @@ void setMenu(MainWindow *w) {
         auto path = selectNewFile(nullptr);
         bool isOk = writeAllText(path, txt->toPlainText());
         if (!isOk) {
+            setCurrentPath(path);
+            w->updateTitle();
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
         }
     });
