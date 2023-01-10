@@ -74,9 +74,10 @@ void setMenu(MainWindow *w) {
         auto path = selectNewFile(nullptr);
         if (path.isEmpty()) return;
         bool isOk = w->save(path);
-        if (!isOk) {
+        if (isOk) {
             setCurrentPath(path);
             w->updateTitle();
+        } else {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
         }
     });
@@ -85,10 +86,7 @@ void setMenu(MainWindow *w) {
     MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{ w->loadFile(); });
 
     auto *exitAct = new QAction("&Exit", w);
-    MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{
-        // TODO
-
-    });
+    MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{ w->close(); });
     //region file
 
     menuFile->addAction(newAct);

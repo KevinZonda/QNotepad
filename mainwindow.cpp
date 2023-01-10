@@ -97,37 +97,38 @@ bool MainWindow::save() {
     return this->save(getCurrentPath());
 }
 
-
-void MainWindow::closeEvent(QCloseEvent *event) {
-    if (!this->isModified) return;
-    if (!hasPath() && this->ui->txtContent->toPlainText().trimmed().isEmpty()) return;
+// True: process ok, go close
+// False: process failed, block close
+bool MainWindow::preclose() {
+    if (!this->isModified) return true;
+    if (!hasPath() && this->ui->txtContent->toPlainText().trimmed().isEmpty()) return true;
 
     auto rst = QMessageBox::information(this,
                                         "Change Not Saved",
                                         "Change not saved. Save?",
-                                        QMessageBox::Cancel | QMessageBox::Save | QMessageBox::No,
+                                        QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel,
                                         QMessageBox::Cancel);
-    if (rst == QMessageBox::Cancel) {event->ignore(); return;}
-    if (rst == QMessageBox::No) {event->accept(); return;}
+    if (rst == QMessageBox::Cancel) return false;
+    if (rst == QMessageBox::No) return true;
     if (hasPath()) {
         this->save();
-        event->accept();
-        return;
+        return true;
     }
 
     auto path = selectNewFile(nullptr);
     if (path.isEmpty()) {
         QMessageBox::critical(nullptr, "Cancelled", "User cancelled proecess. Not saved!");
-        event->ignore();
-        return;
+        return false;
     }
 
     bool isOk = this->save(path);
-    if (isOk) {
-        event->accept();
-        return;
-    }
+    if (isOk) return true;
 
     QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
-    event->ignore();
+    return false;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if (this->preclose()) event->accept();
+    else event->ignore();
 }

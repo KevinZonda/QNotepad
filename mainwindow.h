@@ -24,6 +24,7 @@ public:
     bool loadFile();
     bool save(QString path);
     bool save();
+    bool preclose();
 private:
     NextLineWay currentNextLine = Unknown;
     void closeEvent(QCloseEvent *event);
