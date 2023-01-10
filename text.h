@@ -4,7 +4,7 @@
 #include <QString>
 
 enum NextLineWay {
-    CRLF, // \r\n
+    CRLF,  // \r\n
     LF,    // \n
     Unknown
 };
@@ -18,5 +18,7 @@ QString toCrLf(NextLineWay, QString);
 QString toLf(QString);
 
 QString toCrLf(QString);
+
+const char* nextLineWayString(NextLineWay);
 
 #endif // TEXT_H

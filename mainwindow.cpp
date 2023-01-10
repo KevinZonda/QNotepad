@@ -42,20 +42,7 @@ void MainWindow::updateTitle(bool isModifyCalled) {
 
 void MainWindow::setNextLine(NextLineWay x) {
     this->currentNextLine = x;
-    const char* msg;
-    switch(x) {
-    case CRLF:
-        msg = "CRLF";
-        break;
-    case LF:
-        msg = "LF";
-        break;
-    default:
-        msg = "Unknown (LF)";
-        break;
-    }
-
-    this->ui->statusbar->showMessage(msg);
+    this->ui->statusbar->showMessage(nextLineWayString(x));
 
 }
 

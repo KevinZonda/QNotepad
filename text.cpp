@@ -1,5 +1,14 @@
 #include "text.h"
-#include "QtCore/qdebug.h"
+
+const char* _lf = "LF";
+const char* _crlf = "CRLF";
+const char* _unknown = "Unknown (LF)";
+
+const char* nextLineWayString(NextLineWay n) {
+    if (n == LF) return _lf;
+    if (n == CRLF) return _crlf;
+    return _unknown;
+}
 
 NextLineWay getCrLf(QString s) {
     if (!s.contains("\n")) {
