@@ -1,7 +1,7 @@
 #include "text.h"
 
-const char* _lf = "LF";
-const char* _crlf = "CRLF";
+const char* _lf      = "LF";
+const char* _crlf    = "CRLF";
 const char* _unknown = "Unknown (LF)";
 
 const char* nextLineWayString(NextLineWay n) {
