@@ -138,3 +138,8 @@ bool MainWindow::setFont(QString font) {
     ui->txtContent->setFont(font);
     return true;
 }
+
+void MainWindow::onOpenFile(const QString & fileName) {
+    setCurrentPath(QString(fileName));
+    loadFile();
+}

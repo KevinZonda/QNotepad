@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "shared.h"
 #include "ui_mainwindow.h"
+#include "myapplication.h"
 
 #include <QApplication>
 #include <QMessageBox>
@@ -11,7 +12,6 @@
 #include <QStatusBar>
 
 static QPlainTextEdit* txt = nullptr;
-
 
 void setMenu(MainWindow *w) {
 
@@ -107,7 +107,7 @@ void setMenu(MainWindow *w) {
 
     auto *exitAct = new QAction("&Exit", w);
     MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{ w->close(); });
-    //region file
+    //endregion
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
@@ -122,9 +122,11 @@ void setMenu(MainWindow *w) {
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    MyApplication a(argc, argv);
     MainWindow w;
     setMenu(&w);
+
+   QObject::connect ( &a, &MyApplication::openFile, &w, &MainWindow::onOpenFile );
 
     if (argc > 1) {
         setCurrentPath(QString(argv[1]));

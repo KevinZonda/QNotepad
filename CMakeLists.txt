@@ -25,7 +25,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-)
+        myapplication.cpp myapplication.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QNotepad
@@ -51,7 +51,6 @@ else()
 endif()
 
 target_link_libraries(QNotepad PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
 set_target_properties(QNotepad PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER qnotepad.kevinzonda.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
