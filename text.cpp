@@ -5,20 +5,20 @@ const char* _crlf = "CRLF";
 const char* _unknown = "Unknown (LF)";
 
 const char* nextLineWayString(NextLineWay n) {
-    if (n == LF) return _lf;
+    if (n == LF)   return _lf;
     if (n == CRLF) return _crlf;
-    return _unknown;
+    else           return _unknown;
 }
 
 NextLineWay getCrLf(QString s) {
     if (!s.contains("\n"))  return Unknown;
     if (s.contains("\r\n")) return CRLF;
-    else                    return LF;
+    else                       return LF;
 }
 
 QString toLf(NextLineWay ori, QString str) {
     if (ori != CRLF) return str;
-    return toLf(str);
+    else             return toLf(str);
 }
 
 QString toLf(QString str) {
@@ -30,7 +30,7 @@ QString toLf(QString str) {
 
 QString toCrLf(NextLineWay ori, QString str) {
     if (ori == CRLF) return str;
-    return toCrLf(str);
+    else             return toCrLf(str);
 }
 
 
