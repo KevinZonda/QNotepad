@@ -14,7 +14,6 @@ static QPlainTextEdit* txt = nullptr;
 
 
 void setMenu(MainWindow *w) {
-    w->menuBar()->setNativeMenuBar(false);
 
     //region Edit
 
@@ -133,6 +132,7 @@ int main(int argc, char *argv[])
     }
 
     w.updateTitle();
+
 
     txt = w.ui->txtContent;
 

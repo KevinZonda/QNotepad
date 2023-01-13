@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setUnifiedTitleAndToolBarOnMac(true);
+    menuBar()->setNativeMenuBar(false);
+
+
     QObject::connect(ui->txtContent, &QPlainTextEdit::modificationChanged, this,
                 [this](bool m) {
                     this->setModify(m);
