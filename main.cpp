@@ -97,7 +97,6 @@ void setMenu(MainWindow *w) {
         if (!isOk) {
             QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
             return;
-
         }
         setCurrentPath(path);
     });
@@ -126,7 +125,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     setMenu(&w);
 
-   QObject::connect ( &a, &MyApplication::openFile, &w, &MainWindow::onOpenFile );
+    QObject::connect ( &a, &MyApplication::openFile, &w, &MainWindow::onOpenFile );
 
     if (argc > 1) {
         setCurrentPath(QString(argv[1]));
