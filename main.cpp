@@ -13,7 +13,8 @@
 
 static QPlainTextEdit* txt = nullptr;
 
-void setMenu(MainWindow *w) {
+void setMenu(MainWindow *w, bool native = true) {
+    w->menuBar()->setNativeMenuBar(native);
 
     //region Edit
 
