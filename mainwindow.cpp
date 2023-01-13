@@ -96,7 +96,7 @@ bool MainWindow::preclose() {
                                         QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel,
                                         QMessageBox::Cancel);
     if (rst == QMessageBox::Cancel) return false;
-    if (rst == QMessageBox::Save)   return true;
+    if (rst == QMessageBox::No)     return true;
     if (hasPath()) {
         this->save();
         return true;
