@@ -27,7 +27,11 @@ void setMenu(MainWindow *w) {
     MainWindow::connect(redoAct, &QAction::triggered, qApp, []{ txt->redo(); });
 
     auto *clearAct = new QAction("&Clear", w);
-    MainWindow::connect(clearAct, &QAction::triggered, qApp, []{ txt->setPlainText(""); });
+    MainWindow::connect(clearAct, &QAction::triggered, qApp, []{
+        auto t = txt->toPlainText(); // prevent clear empty text cause modify
+        if (t.isEmpty()) return;
+        txt->setPlainText("");
+    });
 
     auto *toLFAct  = new QAction("&To LF", w);
     MainWindow::connect(toLFAct, &QAction::triggered, qApp, [w]{
