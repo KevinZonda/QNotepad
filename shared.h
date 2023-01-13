@@ -3,6 +3,8 @@
 
 
 #include "QString"
+#include "QtGui/qaction.h"
+#include <QMap>
 
 QString getCurrentPath();
 
@@ -17,5 +19,8 @@ SetSignal setCurrentPath(QString);
 bool hasPath();
 
 void clearCurrentPath();
+
+QMap<QString, QAction*>* getActionMap();
+
 
 #endif // SHARED_H

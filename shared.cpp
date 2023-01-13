@@ -21,3 +21,9 @@ SetSignal setCurrentPath(QString p){
 bool hasPath(){
     return !currentPath.isEmpty();
 }
+
+QMap<QString, QAction*> actMap;
+
+QMap<QString, QAction*>* getActionMap() {
+    return &actMap;
+}

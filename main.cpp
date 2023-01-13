@@ -109,6 +109,10 @@ void setMenu(MainWindow *w, bool native = true) {
     MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{ w->close(); });
     //endregion
 
+    auto m = getActionMap();
+    m->insert("crlf", toCRLFAct);
+    m->insert("lf", toLFAct);
+
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);

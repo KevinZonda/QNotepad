@@ -45,6 +45,17 @@ void MainWindow::updateTitle(bool isModifyCalled) {
 
 void MainWindow::setNextLine(NextLineWay x) {
     this->currentNextLine = x;
+    auto m = getActionMap();
+    auto lf = m->value("lf");
+    auto crlf = m->value("crlf");
+    lf->setDisabled(false);
+    crlf->setDisabled(false);
+    if (x == LF) {
+        lf->setDisabled(true);
+    }
+    else if (x == CRLF) {
+        crlf->setDisabled(true);
+    }
     this->ui->statusbar->showMessage(nextLineWayString(x));
 
 }
