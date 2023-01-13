@@ -1,13 +1,14 @@
 #include "QtWidgets/qmenubar.h"
-#include "QStatusBar"
+
 #include "io.h"
 #include "mainwindow.h"
-#include "QPlainTextEdit"
 #include "shared.h"
 #include "ui_mainwindow.h"
 
 #include <QApplication>
 #include <QMessageBox>
+#include <QPlainTextEdit>
+#include <QStatusBar>
 
 static QPlainTextEdit* txt = nullptr;
 
