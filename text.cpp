@@ -11,19 +11,14 @@ const char* nextLineWayString(NextLineWay n) {
 }
 
 NextLineWay getCrLf(QString s) {
-    if (!s.contains("\n")) {
-        return Unknown;
-    }
+    if (!s.contains("\n"))  return Unknown;
     if (s.contains("\r\n")) return CRLF;
-    return LF;
+    else                    return LF;
 }
 
 QString toLf(NextLineWay ori, QString str) {
     if (ori != CRLF) return str;
-    while (str.contains("\r\n")) {
-        str = str.replace("\r\n", "\n");
-    }
-    return str;
+    return toLf(str);
 }
 
 QString toLf(QString str) {
@@ -35,7 +30,7 @@ QString toLf(QString str) {
 
 QString toCrLf(NextLineWay ori, QString str) {
     if (ori == CRLF) return str;
-    return str.replace("\n", "\r\n").replace("\r\r\n", "\r\n");;
+    return toCrLf(str);
 }
 
 
