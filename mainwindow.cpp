@@ -83,7 +83,8 @@ bool MainWindow::save() {
 // False: process failed, block close
 bool MainWindow::preclose() {
     if (!this->isModified) return true;
-    if (!hasPath() && this->ui->txtContent->toPlainText().trimmed().isEmpty()) return true;
+    if (!hasPath() && this->ui->txtContent->toPlainText().trimmed().isEmpty())
+        return true;
 
     auto rst = QMessageBox::information(this,
                                         "Change Not Saved",
@@ -91,7 +92,7 @@ bool MainWindow::preclose() {
                                         QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel,
                                         QMessageBox::Cancel);
     if (rst == QMessageBox::Cancel) return false;
-    if (rst == QMessageBox::No) return true;
+    if (rst == QMessageBox::Save)   return true;
     if (hasPath()) {
         this->save();
         return true;
@@ -112,7 +113,7 @@ bool MainWindow::preclose() {
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (this->preclose()) event->accept();
-    else event->ignore();
+    else                  event->ignore();
 }
 
 void MainWindow::setModify(bool modifyState, bool updateTitle) {
@@ -125,4 +126,11 @@ void MainWindow::setModify(bool modifyState, bool updateTitle) {
 
 bool MainWindow::getModify() {
     return this->isModified;
+}
+
+bool MainWindow::setFont(QString font) {
+    QFont f;
+    if (f.fromString(font)) return false;
+    ui->txtContent->setFont(font);
+    return true;
 }

@@ -136,6 +136,8 @@ int main(int argc, char *argv[])
 
     txt = w.ui->txtContent;
 
+    w.setFont("Courier New");
+
     w.show();
     return a.exec();
 }

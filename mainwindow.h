@@ -25,6 +25,7 @@ public:
     bool save(QString path);
     bool save();
     bool preclose();
+    bool setFont(QString font);
 private:
     NextLineWay currentNextLine = Unknown;
     void closeEvent(QCloseEvent *event);
