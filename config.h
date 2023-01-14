@@ -10,6 +10,7 @@ public:
     ~config();
     QStringList* font;
     int fontSize;
+    bool nativeTitleBar;
     QString toJson();
 };
 

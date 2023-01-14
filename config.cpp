@@ -6,6 +6,7 @@
 config::config() {
     font = new QStringList();
     fontSize = -1;
+    nativeTitleBar = false;
 }
 
 config::~config() {
@@ -16,6 +17,7 @@ QString config::toJson() {
     QJsonObject j;
     j.insert("font", QJsonArray::fromStringList(*font));
     j.insert("fontSize", fontSize);
+    j.insert("nativeTitleBar", nativeTitleBar);
     QJsonDocument doc(j);
     return doc.toJson();
 }
@@ -23,6 +25,7 @@ QString config::toJson() {
 config::config(QString json) {
     font = new QStringList();
     fontSize = -1;
+    nativeTitleBar = false;
     if (json.isEmpty()) return;
     auto j = QJsonDocument::fromJson(json.toUtf8());
     if (j.isNull()) return;
@@ -40,5 +43,8 @@ config::config(QString json) {
     }
     if (o.contains("fontSize")) {
         fontSize = o.value("fontSize").toInt();
+    }
+    if (o.contains("nativeTitleBar")) {
+        nativeTitleBar = o.value("nativeTitleBar").toBool();
     }
 }

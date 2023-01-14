@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 {
     MyApplication a(argc, argv);
     MainWindow w;
-    setMenu(&w);
+    setMenu(&w, w.getCfg()->nativeTitleBar);
 
     QObject::connect ( &a, &MyApplication::openFile, &w, &MainWindow::onOpenFile );
 
