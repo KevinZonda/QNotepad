@@ -1,29 +1,42 @@
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include "config.h"
 
 config::config() {
-    font = "";
+    font = new QStringList();
     fontSize = -1;
+}
+
+config::~config() {
+    delete font;
 }
 
 QString config::toJson() {
     QJsonObject j;
-    j.insert("font", font);
+    j.insert("font", QJsonArray::fromStringList(*font));
     j.insert("fontSize", fontSize);
     QJsonDocument doc(j);
     return doc.toJson();
 }
 
 config::config(QString json) {
-    font = "";
+    font = new QStringList();
     fontSize = -1;
     if (json.isEmpty()) return;
     auto j = QJsonDocument::fromJson(json.toUtf8());
     if (j.isNull()) return;
     auto o = j.object();
     if (o.contains("font")) {
-        font = o.value("font").toString();
+        auto f = o.value("font");
+        if (!f.isArray())
+            (*font) << o.value("font").toString();
+        else {
+            auto a = f.toArray();
+            for (auto i = a.begin(); i != a.end(); i++) {
+                (*font) << i->toString();
+            }
+        }
     }
     if (o.contains("fontSize")) {
         fontSize = o.value("fontSize").toInt();

@@ -210,5 +210,5 @@ void MainWindow::loadConfig() {
     }
 
     swapCfg(new config(x.text));
-    setFont(cfg->font, cfg->fontSize);
+    setFont(*cfg->font, cfg->fontSize);
 }
