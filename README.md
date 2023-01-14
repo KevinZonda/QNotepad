@@ -22,3 +22,15 @@ Sample config is below. To be aware, the `wordWrap` pair is valid only when `lin
     "wordWrap": true
 }
 ```
+
+## Command Tool (macOS only)
+
+Like Windows' `notepad.exe`, QNotepad provides its command tool.  
+Use below command to install:
+
+```bash
+sudo cp ./notepad /usr/local/bin
+sudo chmod +x /usr/local/bin/notepad
+```
+
+Then run `notepad` in terminal to open QNotepad.
