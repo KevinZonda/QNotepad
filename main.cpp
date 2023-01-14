@@ -61,13 +61,6 @@ void setMenu(MainWindow *w, bool native = true) {
     //region File
 
     QMenu* menuFile = w->menuBar()->addMenu("&File");
-    auto *saveAct = new QAction("&Save", w);
-    MainWindow::connect(saveAct, &QAction::triggered, qApp, [w]{
-        if (!w->save()) {
-            QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
-        }
-        return;
-    });
 
     auto *newAct = new QAction("&New", w);
     MainWindow::connect(newAct, &QAction::triggered, qApp, [w]{
@@ -87,23 +80,23 @@ void setMenu(MainWindow *w, bool native = true) {
             auto rst = QMessageBox::information(nullptr, "Reload", "Reload file?", QMessageBox::Ok | QMessageBox::Cancel);
             if (rst == QMessageBox::Cancel) return;
         }
-        bool isOk = w->loadFile();
-        if (isOk) w->updateTitle();
+        if (w->loadFile()) w->updateTitle();
 
     });
 
-
-    auto *saveAsAct = new QAction("&Save as", w);
-    MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{
-        auto path = selectNewFile(nullptr);
-        if (path.isEmpty()) return;
-        bool isOk = w->save(path);
-        if (!isOk) {
-            QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+    auto *saveAct = new QAction("&Save", w);
+    MainWindow::connect(saveAct, &QAction::triggered, qApp, [w]{
+        if (!hasPath()) {
+            w->saveAs();
             return;
         }
-        setCurrentPath(path);
+        if (w->save()) return;
+        QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+
     });
+
+    auto *saveAsAct = new QAction("&Save as", w);
+    MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{ w->saveAs(); });
 
     auto *reloadAct = new QAction("&Reload", w);
     MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{ w->loadFile(); });

@@ -31,6 +31,7 @@ public:
     config* getCfg();
     void loadConfig();
     void increaseZoom(int v);
+    void saveAs();
 public slots:
     void onOpenFile(const QString & fileName);
 private:

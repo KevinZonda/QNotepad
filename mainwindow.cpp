@@ -234,3 +234,14 @@ void MainWindow::loadConfig() {
         ui->txtContent->setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     }
 }
+
+void MainWindow::saveAs() {
+    auto path = selectNewFile(nullptr);
+    if (path.isEmpty()) return;
+    bool isOk = save(path);
+    if (!isOk) {
+        QMessageBox::critical(nullptr, "Write failed", "Cannot write to specific file!");
+        return;
+    }
+    setCurrentPath(path);
+}
