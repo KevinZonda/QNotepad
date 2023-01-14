@@ -17,6 +17,11 @@ static QPlainTextEdit* txt = nullptr;
 
 void setMenu(MainWindow *w, bool native = true) {
     w->menuBar()->setNativeMenuBar(native);
+#ifdef Q_OS_MAC
+    if (!native) {
+        w->menuBar()->setFixedHeight(20);
+    }
+#endif
 
     //region Edit
 
@@ -124,7 +129,7 @@ void setMenu(MainWindow *w, bool native = true) {
     saveAct->setShortcut(QKeySequence::Save);
     saveAsAct->setShortcut(QKeySequence::SaveAs);
     zoomInAct->setShortcut(QKeySequence::ZoomIn);
-    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Equal), w);
+    auto *shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal), w);
     MainWindow::connect(shortcut, &QShortcut::activated, qApp, [w]{
         w->increaseZoom(5);
     });
