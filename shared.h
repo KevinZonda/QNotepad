@@ -20,6 +20,8 @@ bool hasPath();
 
 void clearCurrentPath();
 
+QString getTitle();
+
 QMap<QString, QAction*>* getActionMap();
 
 

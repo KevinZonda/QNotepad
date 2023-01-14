@@ -1,9 +1,16 @@
+#include <QFileInfo>
 #include "shared.h"
 
 QString currentPath = "";
 
 void clearCurrentPath() {
     currentPath = "";
+}
+
+QString getTitle() {
+    if (!hasPath()) return "untitled";
+    QFileInfo fi(getCurrentPath());
+    return fi.fileName();
 }
 
 QString getCurrentPath(){

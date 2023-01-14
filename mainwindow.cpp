@@ -37,11 +37,7 @@ void MainWindow::updateTitle(bool isModifyCalled) {
             return;
         this->setWindowTitle("*" + title);
     }
-    QFileInfo info(getCurrentPath());
-
-    QString title = hasPath()
-            ? "QNotepad - " + info.fileName()
-            : "QNotepad";
+    QString title = "QNotepad - " + getTitle();
     title = this->isModified ? "*" + title : title;
     this->setWindowTitle(title);
 }
