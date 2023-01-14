@@ -207,4 +207,5 @@ void MainWindow::loadConfig() {
 
     swapCfg(new config(x.text));
     setFont(*cfg->font, cfg->fontSize);
+    ui->txtContent->setLineWrapMode(cfg->lineWrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
 }

@@ -11,6 +11,7 @@ public:
     QStringList* font;
     int fontSize;
     bool nativeTitleBar;
+    bool lineWrap;
     QString toJson();
 };
 

@@ -7,6 +7,7 @@ config::config() {
     font = new QStringList();
     fontSize = -1;
     nativeTitleBar = false;
+    lineWrap = false;
 }
 
 config::~config() {
@@ -18,6 +19,7 @@ QString config::toJson() {
     j.insert("font", QJsonArray::fromStringList(*font));
     j.insert("fontSize", fontSize);
     j.insert("nativeTitleBar", nativeTitleBar);
+    j.insert("lineWrap", lineWrap);
     QJsonDocument doc(j);
     return doc.toJson();
 }
@@ -26,6 +28,7 @@ config::config(QString json) {
     font = new QStringList();
     fontSize = -1;
     nativeTitleBar = false;
+    lineWrap = false;
     if (json.isEmpty()) return;
     auto j = QJsonDocument::fromJson(json.toUtf8());
     if (j.isNull()) return;
@@ -46,5 +49,8 @@ config::config(QString json) {
     }
     if (o.contains("nativeTitleBar")) {
         nativeTitleBar = o.value("nativeTitleBar").toBool();
+    }
+    if (o.contains("lineWrap")) {
+        lineWrap = o.value("lineWrap").toBool();
     }
 }
