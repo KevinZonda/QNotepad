@@ -16,16 +16,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        shared.h
-        shared.cpp
-        text.h
-        text.cpp
-        io.h
-        io.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        myapplication.cpp myapplication.h)
+        shared.h shared.cpp
+        text.h text.cpp
+        io.h io.cpp
+        mainwindow.cpp mainwindow.h mainwindow.ui
+        myapplication.cpp myapplication.h
+        config.cpp config.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QNotepad

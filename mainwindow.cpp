@@ -4,6 +4,8 @@
 #include "shared.h"
 #include <QMessageBox>
 #include <QFileInfo>
+#include <QDir>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,12 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
                     this->setModify(m);
                 }
     );
-
+    loadConfig();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    if (cfg != nullptr) delete cfg;
 }
 
 
@@ -142,14 +145,70 @@ bool MainWindow::getModify() {
     return this->isModified;
 }
 
-bool MainWindow::setFont(QString font) {
+void MainWindow::setFont(QString font, int size) {
     QFont f;
-    if (f.fromString(font)) return false;
-    ui->txtContent->setFont(font);
-    return true;
+    if (font.isEmpty()) {
+        f = ui->txtContent->font();
+    } else {
+        f.setFamily(font);
+    }
+
+    if (size > 0) f.setPointSize(size);
+    ui->txtContent->setFont(f);
+}
+
+void MainWindow::setFont(QStringList & families, int size) {
+    QFont f;
+    if (families.isEmpty()) {
+        f = ui->txtContent->font();
+    } else {
+        f.setFamilies(families);
+    }
+
+    if (size > 0) f.setPointSize(size);
+    ui->txtContent->setFont(f);
 }
 
 void MainWindow::onOpenFile(const QString & fileName) {
     setCurrentPath(QString(fileName));
     loadFile();
+}
+
+config* MainWindow::getCfg() {
+    if (cfg == nullptr) loadConfig();
+    return cfg;
+}
+
+QString getConfigPath() {
+    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+}
+
+QString getConfigFile(const QString filename)
+{
+    return QDir::cleanPath(getConfigPath() + QDir::separator() + filename);
+}
+
+void MainWindow::swapCfg(config *newCfg) {
+    config* c = cfg;
+    cfg = newCfg;
+    if (c != nullptr) delete c;
+}
+
+void MainWindow::loadConfig() {
+    auto path = getConfigFile("config.json");
+    qDebug() << path;
+    if (!QFile::exists(path)) {
+        swapCfg(new config());
+        return;
+    }
+
+    auto x = readAllText(path);
+    if (!x.ok) {
+        QMessageBox::critical(nullptr, "Read config failed", "Cannot read config file! Use default config.");
+        swapCfg(new config());
+        return;
+    }
+
+    swapCfg(new config(x.text));
+    setFont(cfg->font, cfg->fontSize);
 }

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "text.h"
+#include "config.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -25,12 +26,17 @@ public:
     bool save(QString path);
     bool save();
     bool preclose();
-    bool setFont(QString font);
+    void setFont(QStringList & families, int fontSize = -1);
+    void setFont(QString font = "", int fontSize = -1);
+    config* getCfg();
+    void loadConfig();
 public slots:
     void onOpenFile(const QString & fileName);
 private:
     NextLineWay currentNextLine = Unknown;
     void closeEvent(QCloseEvent *event);
     bool isModified = false;
+    config* cfg = nullptr;
+    void swapCfg(config* newCfg);
 };
 #endif // MAINWINDOW_H

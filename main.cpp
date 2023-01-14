@@ -52,6 +52,7 @@ void setMenu(MainWindow *w, bool native = true) {
     menuEdit->addAction(undoAct);
     menuEdit->addAction(redoAct);
     menuEdit->addAction(clearAct);
+    menuEdit->addSeparator();
     menuEdit->addAction(toLFAct);
     menuEdit->addAction(toCRLFAct);
 
@@ -138,11 +139,8 @@ int main(int argc, char *argv[])
     }
 
     w.updateTitle();
-
-
+    
     txt = w.ui->txtContent;
-
-    w.setFont("Courier New");
 
     w.show();
     return a.exec();
