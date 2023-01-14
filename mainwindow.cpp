@@ -165,6 +165,15 @@ void MainWindow::setFont(QStringList & families, int size) {
     ui->txtContent->setFont(f);
 }
 
+void MainWindow::increaseZoom(int v) {
+    auto f = ui->txtContent->font();
+    auto s = f.pointSize();
+    s += v;
+    if (s < 1) s = 1;
+    f.setPointSize(s);
+    ui->txtContent->setFont(f);
+}
+
 void MainWindow::onOpenFile(const QString & fileName) {
     setCurrentPath(QString(fileName));
     loadFile();

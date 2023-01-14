@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QStatusBar>
+#include <QShortcut>
 
 static QPlainTextEdit* txt = nullptr;
 
@@ -110,19 +111,38 @@ void setMenu(MainWindow *w, bool native = true) {
     MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{ w->close(); });
     //endregion
 
+    auto *zoomInAct = new QAction("&Zoom In", w);
+    MainWindow::connect(zoomInAct, &QAction::triggered, qApp, [w]{
+        w->increaseZoom(5);
+    });
+
+    auto *zoomOutAct = new QAction("&Zoom Out", w);
+    MainWindow::connect(zoomOutAct, &QAction::triggered, qApp, [w]{
+        w->increaseZoom(-5);
+    });
+
+
     auto m = getActionMap();
     m->insert("crlf", toCRLFAct);
     m->insert("lf", toLFAct);
 
     newAct->setShortcut(QKeySequence::New);
-    saveAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    saveAct->setShortcut(QKeySequence::Save);
     saveAsAct->setShortcut(QKeySequence::SaveAs);
+    zoomInAct->setShortcut(QKeySequence::ZoomIn);
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Equal), w);
+    MainWindow::connect(shortcut, &QShortcut::activated, qApp, [w]{
+        w->increaseZoom(5);
+    });
+    zoomOutAct->setShortcut(QKeySequence::ZoomOut);
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);
     menuFile->addAction(reloadAct);
+    menuFile->addAction(zoomInAct);
+    menuFile->addAction(zoomOutAct);
     menuFile->addAction(exitAct);
 
     w->menuBar()->addMenu(menuFile);
