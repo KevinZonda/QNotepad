@@ -36,7 +36,7 @@ public slots:
     void onOpenFile(const QString & fileName);
 private:
     NextLineWay currentNextLine = Unknown;
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
     bool isModified = false;
     config* cfg = nullptr;
     void swapCfg(config* newCfg);

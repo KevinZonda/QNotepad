@@ -22,6 +22,6 @@ enum Encoding {
     UTF16
 };
 
-bool writeAllText(QString path, QString content, Encoding encoding = UTF8);
+bool writeAllText(QString path, QString& content, Encoding encoding = UTF8);
 
 #endif // IO_H

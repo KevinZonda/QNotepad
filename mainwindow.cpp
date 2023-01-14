@@ -6,7 +6,6 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QStandardPaths>
-#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    if (cfg != nullptr) delete cfg;
+    delete cfg;
 }
 
 
@@ -210,7 +209,7 @@ QString getConfigFile(const QString filename)
 void MainWindow::swapCfg(config *newCfg) {
     config* c = cfg;
     cfg = newCfg;
-    if (c != nullptr) delete c;
+    delete c;
 }
 
 void MainWindow::loadConfig() {
