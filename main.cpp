@@ -114,6 +114,10 @@ void setMenu(MainWindow *w, bool native = true) {
     m->insert("crlf", toCRLFAct);
     m->insert("lf", toLFAct);
 
+    newAct->setShortcut(QKeySequence::New);
+    saveAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    saveAsAct->setShortcut(QKeySequence::SaveAs);
+
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
     menuFile->addAction(saveAct);
@@ -131,7 +135,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     setMenu(&w, w.getCfg()->nativeTitleBar);
 
-    QObject::connect ( &a, &MyApplication::openFile, &w, &MainWindow::onOpenFile );
+    QObject::connect (&a, &MyApplication::openFile, &w, &MainWindow::onOpenFile);
 
     if (argc > 1) {
         setCurrentPath(QString(argv[1]));

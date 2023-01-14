@@ -8,6 +8,6 @@
     "fontSize": 17,
     "nativeTitleBar": true,
     "lineWrap": true,
-    "wordWrap": true,
+    "wordWrap": true
 }
 ```
