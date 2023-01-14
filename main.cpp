@@ -152,17 +152,34 @@ void setMenu(MainWindow *w, bool native = true) {
 
 void setStatusBar(MainWindow *w) {
     auto *statusBar = new QStatusBar(w);
-    //statusBar->setStyleSheet("QStatusBar::item { border: 0px solid black };");
+    // statusBar->setStyleSheet("QStatusBar::item { border: 0px solid black };");
     w->setStatusBar(statusBar);
-    auto *count = new QLabel("", w);
-    count->setText("Count: 0");
-    statusBar->addWidget(count);
+
+    auto *count = new QLabel("count: 0", w);
     getLabelMap()->insert("count", count);
 
-    auto *crlf = new QLabel("", w);
-    crlf->setText("Unknown");
+    auto *sep = new QLabel("|", w);
+
+    auto *crlf = new QLabel("Unknown", w);
     getLabelMap()->insert("crlf", crlf);
+
+
+    auto *sep2 = new QLabel("|", w);
+
+    auto *pos = new QLabel("Col: 0, Row: 0", w);
+    getLabelMap()->insert("pos", pos);
+
+    auto *path = new QLabel("", w);
+    getLabelMap()->insert("path", path);
+
+
+    statusBar->addWidget(path);
+
+    statusBar->addPermanentWidget(count);
+    statusBar->addPermanentWidget(sep);
     statusBar->addPermanentWidget(crlf);
+    statusBar->addPermanentWidget(sep2);
+    statusBar->addPermanentWidget(pos);
 }
 
 int main(int argc, char *argv[])

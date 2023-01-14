@@ -4,8 +4,19 @@
 
 QString currentPath = "";
 
+void setPathLabel() {
+    auto path = currentPath;
+    auto pth = getLabelMap()->value("path");
+    if (currentPath.length() > 50) {
+        path = "..." + currentPath.right(50);
+    }
+    pth->setToolTip(currentPath);
+    pth->setText(path);
+}
+
 void clearCurrentPath() {
     currentPath = "";
+    setPathLabel();
 }
 
 QString getTitle() {
@@ -23,6 +34,7 @@ SetSignal setCurrentPath(QString p){
     if (np.isEmpty()) return Invalid;
     if (np == currentPath) return Same;
     currentPath = np;
+    setPathLabel();
     return Ok;
 }
 

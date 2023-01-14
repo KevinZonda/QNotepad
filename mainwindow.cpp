@@ -27,6 +27,14 @@ MainWindow::MainWindow(QWidget *parent)
                          getLabelMap()->value("count")->setText("count: " + QString::number(ui->txtContent->toPlainText().length()));
                      }
     );
+
+    QObject::connect(ui->txtContent, &QPlainTextEdit::cursorPositionChanged, this,
+                     [this]() {
+                         auto c = ui->txtContent->textCursor();
+                         getLabelMap()->value("pos")->setText(
+                                 "Row: " + QString::number(c.blockNumber() + 1) + ", Col: " + QString::number(c.columnNumber() + 1));
+                     }
+    );
     loadConfig();
 }
 
