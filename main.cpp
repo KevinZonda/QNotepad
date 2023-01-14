@@ -126,14 +126,17 @@ void setMenu(MainWindow *w, bool native = true) {
     m->insert("lf", toLFAct);
 
     newAct->setShortcut(QKeySequence::New);
+    openAct->setShortcut(QKeySequence::Open);
     saveAct->setShortcut(QKeySequence::Save);
     saveAsAct->setShortcut(QKeySequence::SaveAs);
+    reloadAct->setShortcut(QKeySequence::Refresh);
     zoomInAct->setShortcut(QKeySequence::ZoomIn);
     auto *shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal), w);
     MainWindow::connect(shortcut, &QShortcut::activated, qApp, [w]{
         w->increaseZoom(5);
     });
     zoomOutAct->setShortcut(QKeySequence::ZoomOut);
+    exitAct->setShortcut(QKeySequence::Close);
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
