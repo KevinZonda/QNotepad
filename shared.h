@@ -5,6 +5,7 @@
 #include "QString"
 #include "QtGui/qaction.h"
 #include <QMap>
+#include <QLabel>
 
 QString getCurrentPath();
 
@@ -24,5 +25,6 @@ QString getTitle();
 
 QMap<QString, QAction*>* getActionMap();
 
+QMap<QString, QLabel*>* getLabelMap();
 
 #endif // SHARED_H

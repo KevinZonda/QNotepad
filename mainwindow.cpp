@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QStandardPaths>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
                 [this](bool m) {
                     this->setModify(m);
                 }
+    );
+
+    QObject::connect(ui->txtContent, &QPlainTextEdit::textChanged, this,
+                     [this]() {
+                         getLabelMap()->value("count")->setText("count: " + QString::number(ui->txtContent->toPlainText().length()));
+                     }
     );
     loadConfig();
 }
@@ -55,8 +62,7 @@ void MainWindow::setNextLine(NextLineWay x) {
     else if (x == CRLF) {
         crlf->setDisabled(true);
     }
-    this->ui->statusbar->showMessage(nextLineWayString(x));
-
+    getLabelMap()->value("crlf")->setText(nextLineWayString(x));
 }
 
 NextLineWay MainWindow::getNextLine() {

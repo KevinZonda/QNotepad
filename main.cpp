@@ -11,6 +11,7 @@
 #include <QPlainTextEdit>
 #include <QStatusBar>
 #include <QShortcut>
+#include <QLabel>
 
 static QPlainTextEdit* txt = nullptr;
 
@@ -149,11 +150,27 @@ void setMenu(MainWindow *w, bool native = true) {
     w->menuBar()->addMenu(menuEdit);
 }
 
+void setStatusBar(MainWindow *w) {
+    auto *statusBar = new QStatusBar(w);
+    //statusBar->setStyleSheet("QStatusBar::item { border: 0px solid black };");
+    w->setStatusBar(statusBar);
+    auto *count = new QLabel("", w);
+    count->setText("Count: 0");
+    statusBar->addWidget(count);
+    getLabelMap()->insert("count", count);
+
+    auto *crlf = new QLabel("", w);
+    crlf->setText("Unknown");
+    getLabelMap()->insert("crlf", crlf);
+    statusBar->addPermanentWidget(crlf);
+}
+
 int main(int argc, char *argv[])
 {
     MyApplication a(argc, argv);
     MainWindow w;
     setMenu(&w, w.getCfg()->nativeTitleBar);
+    setStatusBar(&w);
 
     QObject::connect (&a, &MyApplication::openFile, &w, &MainWindow::onOpenFile);
 
