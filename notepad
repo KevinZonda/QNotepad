@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-    nohup /Application/QNotepad.app/Contents/MacOS/QNotepad > /dev/null 2>&1&
+    nohup /Applications/QNotepad.app/Contents/MacOS/QNotepad > /dev/null 2>&1&
 else
-    nohup /Application/QNotepad.app/Contents/MacOS/QNotepad "$1" > /dev/null 2>&1&
+    nohup /Applications/QNotepad.app/Contents/MacOS/QNotepad "$1" > /dev/null 2>&1&
 fi
