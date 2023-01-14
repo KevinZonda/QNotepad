@@ -12,6 +12,7 @@ public:
     int fontSize;
     bool nativeTitleBar;
     bool lineWrap;
+    bool wordWrap;
     QString toJson();
 };
 
