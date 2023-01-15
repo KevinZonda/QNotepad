@@ -172,6 +172,11 @@ void setMenu(MainWindow *w, bool native = true) {
     });
     zoomOutAct->setShortcut(QKeySequence::ZoomOut);
     exitAct->setShortcut(QKeySequence::Close);
+    copyAct->setShortcut(QKeySequence::Copy);
+    cutAct->setShortcut(QKeySequence::Cut);
+    pasteAct->setShortcut(QKeySequence::Paste);
+    undoAct->setShortcut(QKeySequence::Undo);
+    redoAct->setShortcut(QKeySequence::Redo);
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
