@@ -33,6 +33,19 @@ void setMenu(MainWindow *w, bool native = true) {
     q->enqueue(undoAct);
     MainWindow::connect(undoAct, &QAction::triggered, qApp, []{ txt->undo(); });
 
+    auto *copyAct = new QAction("&Copy", w);
+    q->enqueue(copyAct);
+    MainWindow::connect(copyAct, &QAction::triggered, qApp, []{ txt->copy(); });
+
+    auto *pasteAct = new QAction("&Paste", w);
+    q->enqueue(pasteAct);
+    MainWindow::connect(pasteAct, &QAction::triggered, qApp, []{ txt->paste(); });
+
+    auto *cutAct = new QAction("&Cut", w);
+    q->enqueue(cutAct);
+    MainWindow::connect(cutAct, &QAction::triggered, qApp, []{ txt->cut(); });
+
+
     auto *redoAct = new QAction("&Redo", w);
     q->enqueue(redoAct);
     MainWindow::connect(redoAct, &QAction::triggered, qApp, []{ txt->redo(); });
@@ -169,6 +182,10 @@ void setMenu(MainWindow *w, bool native = true) {
     menuFile->addAction(reloadAct);
     menuFile->addAction(exitAct);
 
+    menuEdit->addAction(copyAct);
+    menuEdit->addAction(cutAct);
+    menuEdit->addAction(pasteAct);
+    menuEdit->addSeparator();
     menuEdit->addAction(undoAct);
     menuEdit->addAction(redoAct);
     menuEdit->addAction(clearAct);
