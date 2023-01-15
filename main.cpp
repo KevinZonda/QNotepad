@@ -195,7 +195,7 @@ void setStatusBar(MainWindow *w) {
 
     auto *sep2 = new QLabel("|", w);
 
-    auto *pos = new QLabel("Col: 0, Row: 0", w);
+    auto *pos = new QLabel("Ln: 1, Col: 1", w);
     getLabelMap()->insert("pos", pos);
 
     auto *path = new QLabel("", w);
