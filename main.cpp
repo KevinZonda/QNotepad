@@ -121,6 +121,13 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
 
+    QMenu* helpEdit = w->menuBar()->addMenu("&Help");
+    auto *aboutAct = new QAction("&About", w);
+    MainWindow::connect(aboutAct, &QAction::triggered, qApp, [w]{
+        QMessageBox::about(w, "About", "QNotepad\nby KevinZonda\nhttps://github.com/KevinZonda/QNotepad");
+    });
+
+
     auto m = getActionMap();
     m->insert("crlf", toCRLFAct);
     m->insert("lf", toLFAct);
@@ -147,8 +154,11 @@ void setMenu(MainWindow *w, bool native = true) {
     menuFile->addAction(zoomOutAct);
     menuFile->addAction(exitAct);
 
+    helpEdit->addAction(aboutAct);
+
     w->menuBar()->addMenu(menuFile);
     w->menuBar()->addMenu(menuEdit);
+    w->menuBar()->addMenu(helpEdit);
 }
 
 void setStatusBar(MainWindow *w) {
