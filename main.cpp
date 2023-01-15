@@ -63,13 +63,6 @@ void setMenu(MainWindow *w, bool native = true) {
 
     //endregion
 
-    menuEdit->addAction(undoAct);
-    menuEdit->addAction(redoAct);
-    menuEdit->addAction(clearAct);
-    menuEdit->addSeparator();
-    menuEdit->addAction(toLFAct);
-    menuEdit->addAction(toCRLFAct);
-
     //region File
 
     QMenu* menuFile = w->menuBar()->addMenu("&File");
@@ -167,11 +160,19 @@ void setMenu(MainWindow *w, bool native = true) {
 
     menuFile->addAction(newAct);
     menuFile->addAction(openAct);
+    menuFile->addSeparator();
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);
+    menuFile->addSeparator();
     menuFile->addAction(reloadAct);
     menuFile->addAction(exitAct);
 
+    menuEdit->addAction(undoAct);
+    menuEdit->addAction(redoAct);
+    menuEdit->addAction(clearAct);
+    menuEdit->addSeparator();
+    menuEdit->addAction(toLFAct);
+    menuEdit->addAction(toCRLFAct);
 
     menuView->addAction(zoomInAct);
     menuView->addAction(zoomOutAct);
