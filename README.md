@@ -4,7 +4,9 @@ QNotepad is a simple text editor which is indent to provide a fast and easy notp
 
 ## Screenshot
 
-![QNotepad](docs/img/screenshot.png)
+| Night                        | Light                |
+|------------------------------|----------------------|
+| ![](docs/img/screenshot.png) | ![](docs/img/s2.png) |
 
 ## Config
 
