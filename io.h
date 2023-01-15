@@ -9,6 +9,7 @@ QString selectFile(QWidget *);
 struct ReadStatus readAllText(QString path);
 
 struct ReadStatus {
+    QString size;
     QString text;
     bool ok;
 };

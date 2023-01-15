@@ -27,12 +27,28 @@ QString selectNewFile(QWidget *parent) {
     return file;
 }
 
+QString fileSize(qint64 size) {
+    if (size < 1024) {
+        return QString::number(size) + " B";
+    }
+    double kb = size / 1024.0;
+    if (kb < 1024) {
+        return QString::number(kb, 'f', 2) + " KB";
+    }
+    double mb = kb / 1024.0;
+    if (mb < 1024) {
+        return QString::number(mb, 'f', 2) + " MB";
+    }
+    double gb = mb / 1024.0;
+    return QString::number(gb, 'f', 2) + " GB";
+}
 
 struct ReadStatus readAllText(QString path) {
     struct ReadStatus x;
     x.text = "";
 
     QFile f(path);
+
     if (!f.open(QFile::ReadOnly)) {
         x.ok = false;
         return x;
@@ -40,6 +56,7 @@ struct ReadStatus readAllText(QString path) {
     QTextStream in(&f);
     x.text = in.readAll();
     x.ok = true;
+    x.size = fileSize(f.size());
     f.close();
     return x;
 }

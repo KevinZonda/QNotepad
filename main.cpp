@@ -203,6 +203,9 @@ void setStatusBar(MainWindow *w) {
 
     auto *pos = new QLabel("Ln: 1, Col: 1", w);
     getLabelMap()->insert("pos", pos);
+    auto *sep3 = new QLabel("|", w);
+    auto *size = new QLabel("", w);
+    getLabelMap()->insert("size", size);
 
     auto *path = new QLabel("", w);
     getLabelMap()->insert("path", path);
@@ -210,6 +213,8 @@ void setStatusBar(MainWindow *w) {
 
     statusBar->addWidget(path);
 
+    statusBar->addPermanentWidget(size);
+    statusBar->addPermanentWidget(sep3);
     statusBar->addPermanentWidget(count);
     statusBar->addPermanentWidget(sep);
     statusBar->addPermanentWidget(crlf);

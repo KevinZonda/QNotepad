@@ -88,6 +88,7 @@ bool MainWindow::loadFile() {
         ui->txtContent->setPlainText(rs.text);
         auto x = getCrLf(rs.text);
         this->setNextLine(x);
+        getLabelMap()->value("size")->setText(rs.size);
         return true;
     }
     QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
