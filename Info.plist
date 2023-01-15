@@ -15,16 +15,16 @@
 	<string>QNotepad</string>
 
 	<key>CFBundleDocumentTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeExtensions</key>
-            <array>
-                <string>*</string>
-            </array>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-        </dict>
-    </array>
+	<array>
+	<dict>
+		<key>CFBundleTypeExtensions</key>
+		<array>
+			<string>*</string>
+		</array>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+	</dict>
+	</array>
 
 	<key>CFBundleVersion</key>
 	<string>0.1</string>
