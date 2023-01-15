@@ -136,7 +136,7 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
 
-    QMenu* helpEdit = w->menuBar()->addMenu("&Help");
+    QMenu* menuHelp = w->menuBar()->addMenu("&Help");
 
     auto *aboutAct = new QAction("&About", w);
     q->enqueue(aboutAct);
@@ -144,6 +144,8 @@ void setMenu(MainWindow *w, bool native = true) {
         QMessageBox::about(w, "About", w->getAboutText());
     });
 
+
+    QMenu* menuView = w->menuBar()->addMenu("&View");
 
     auto m = getActionMap();
     m->insert("crlf", toCRLFAct);
@@ -168,15 +170,18 @@ void setMenu(MainWindow *w, bool native = true) {
     menuFile->addAction(saveAct);
     menuFile->addAction(saveAsAct);
     menuFile->addAction(reloadAct);
-    menuFile->addAction(zoomInAct);
-    menuFile->addAction(zoomOutAct);
     menuFile->addAction(exitAct);
 
-    helpEdit->addAction(aboutAct);
+
+    menuView->addAction(zoomInAct);
+    menuView->addAction(zoomOutAct);
+
+    menuHelp->addAction(aboutAct);
 
     w->menuBar()->addMenu(menuFile);
     w->menuBar()->addMenu(menuEdit);
-    w->menuBar()->addMenu(helpEdit);
+    w->menuBar()->addMenu(menuView);
+    w->menuBar()->addMenu(menuHelp);
 }
 
 void setStatusBar(MainWindow *w) {
