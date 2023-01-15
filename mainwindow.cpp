@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QStandardPaths>
+#include <QQueue>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,6 +42,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete cfg;
+    auto q = getAction();
+    while (!q->isEmpty()) {
+        delete q->dequeue();
+    }
 }
 
 

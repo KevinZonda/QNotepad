@@ -12,6 +12,7 @@
 #include <QStatusBar>
 #include <QShortcut>
 #include <QLabel>
+#include <QQueue>
 
 static QPlainTextEdit* txt = nullptr;
 
@@ -24,16 +25,20 @@ void setMenu(MainWindow *w, bool native = true) {
 #endif
 
     //region Edit
+    auto q = getAction();
 
     QMenu* menuEdit = w->menuBar()->addMenu("&Edit");
 
     auto *undoAct = new QAction("&Undo", w);
+    q->enqueue(undoAct);
     MainWindow::connect(undoAct, &QAction::triggered, qApp, []{ txt->undo(); });
 
     auto *redoAct = new QAction("&Redo", w);
+    q->enqueue(redoAct);
     MainWindow::connect(redoAct, &QAction::triggered, qApp, []{ txt->redo(); });
 
     auto *clearAct = new QAction("&Clear", w);
+    q->enqueue(clearAct);
     MainWindow::connect(clearAct, &QAction::triggered, qApp, []{
         auto t = txt->toPlainText(); // prevent clear empty text cause modify
         if (t.isEmpty()) return;
@@ -41,12 +46,14 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
     auto *toLFAct  = new QAction("&To LF", w);
+    q->enqueue(toLFAct);
     MainWindow::connect(toLFAct, &QAction::triggered, qApp, [w]{
         if (w->getNextLine() == LF) return;
         w->setNextLine(LF);
         w->setModify(true);
     });
     auto *toCRLFAct  = new QAction("&To CRLF", w);
+    q->enqueue(toCRLFAct);
     MainWindow::connect(toCRLFAct, &QAction::triggered, qApp, [w]{
         if (w->getNextLine() == CRLF) return;
         w->setNextLine(CRLF);
@@ -68,6 +75,7 @@ void setMenu(MainWindow *w, bool native = true) {
     QMenu* menuFile = w->menuBar()->addMenu("&File");
 
     auto *newAct = new QAction("&New", w);
+    q->enqueue(newAct);
     MainWindow::connect(newAct, &QAction::triggered, qApp, [w]{
         if (!w->preclose()) return;
         clearCurrentPath();
@@ -76,6 +84,7 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
     auto *openAct = new QAction("&Open", w);
+    q->enqueue(openAct);
     MainWindow::connect(openAct, &QAction::triggered, qApp, [w]{
         auto path = selectFile(nullptr);
         SetSignal setStat = setCurrentPath(path);
@@ -90,6 +99,7 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
     auto *saveAct = new QAction("&Save", w);
+    q->enqueue(saveAct);
     MainWindow::connect(saveAct, &QAction::triggered, qApp, [w]{
         if (!hasPath()) {
             w->saveAs();
@@ -101,28 +111,35 @@ void setMenu(MainWindow *w, bool native = true) {
     });
 
     auto *saveAsAct = new QAction("&Save as", w);
+    q->enqueue(saveAsAct);
     MainWindow::connect(saveAsAct, &QAction::triggered, qApp, [w]{ w->saveAs(); });
 
     auto *reloadAct = new QAction("&Reload", w);
+    q->enqueue(reloadAct);
     MainWindow::connect(reloadAct, &QAction::triggered, qApp, [w]{ w->loadFile(); });
 
     auto *exitAct = new QAction("&Exit", w);
+    q->enqueue(exitAct);
     MainWindow::connect(exitAct, &QAction::triggered, qApp, [w]{ w->close(); });
     //endregion
 
     auto *zoomInAct = new QAction("&Zoom In", w);
+    q->enqueue(zoomInAct);
     MainWindow::connect(zoomInAct, &QAction::triggered, qApp, [w]{
         w->increaseZoom(5);
     });
 
     auto *zoomOutAct = new QAction("&Zoom Out", w);
+    q->enqueue(zoomOutAct);
     MainWindow::connect(zoomOutAct, &QAction::triggered, qApp, [w]{
         w->increaseZoom(-5);
     });
 
 
     QMenu* helpEdit = w->menuBar()->addMenu("&Help");
+
     auto *aboutAct = new QAction("&About", w);
+    q->enqueue(aboutAct);
     MainWindow::connect(aboutAct, &QAction::triggered, qApp, [w]{
         QMessageBox::about(w, "About", "QNotepad\nby KevinZonda\nhttps://github.com/KevinZonda/QNotepad");
     });
@@ -138,6 +155,7 @@ void setMenu(MainWindow *w, bool native = true) {
     saveAsAct->setShortcut(QKeySequence::SaveAs);
     reloadAct->setShortcut(QKeySequence::Refresh);
     zoomInAct->setShortcut(QKeySequence::ZoomIn);
+
     auto *shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal), w);
     MainWindow::connect(shortcut, &QShortcut::activated, qApp, [w]{
         w->increaseZoom(5);

@@ -1,5 +1,6 @@
 #include <QFileInfo>
 #include <QLabel>
+#include <QQueue>
 #include "shared.h"
 
 QString currentPath = "";
@@ -51,4 +52,10 @@ QMap<QString, QLabel*> lblMap;
 
 QMap<QString, QLabel*>* getLabelMap() {
     return &lblMap;
+}
+
+QQueue<QAction*> act;
+
+QQueue<QAction*>* getAction() {
+    return &act;
 }

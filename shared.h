@@ -27,4 +27,6 @@ QMap<QString, QAction*>* getActionMap();
 
 QMap<QString, QLabel*>* getLabelMap();
 
+QQueue<QAction*>* getAction();
+
 #endif // SHARED_H
