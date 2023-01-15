@@ -15,11 +15,12 @@ public:
 
     bool event(QEvent *event) override
     {
-        if (event->type() != QEvent::FileOpen)
-            return QApplication::event(event);
-
-        QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
-        emit openFile(openEvent->file());
+        if (event->type() == QEvent::FileOpen)
+        {
+            QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+            emit openFile(openEvent->file());
+        }
+        return QApplication::event(event);;
     }
 
 signals:

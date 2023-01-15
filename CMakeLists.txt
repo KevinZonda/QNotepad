@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
         config.cpp config.h)
 
 set(MACOSX_BUNDLE_ICON_FILE notepad.icns)
+
 set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/notepad.icns")
 set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
@@ -54,6 +55,7 @@ else()
 endif()
 
 target_link_libraries(QNotepad PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+set_target_properties(QNotepad PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 set_target_properties(QNotepad PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER qnotepad.kevinzonda.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
