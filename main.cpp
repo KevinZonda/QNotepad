@@ -74,6 +74,8 @@ void setMenu(MainWindow *w, bool native = true) {
         clearCurrentPath();
         txt->setPlainText("");
         w->setModify(false);
+        getLabelMap()->value("size")->setText("");
+        getLabelMap()->value("sizeSep")->setVisible(false);
     });
 
     auto *openAct = new QAction("&Open", w);
@@ -203,7 +205,10 @@ void setStatusBar(MainWindow *w) {
 
     auto *pos = new QLabel("Ln: 1, Col: 1", w);
     getLabelMap()->insert("pos", pos);
-    auto *sep3 = new QLabel("|", w);
+    auto *sizeSep = new QLabel("|", w);
+    getLabelMap()->insert("sizeSep", sizeSep);
+    sizeSep->setVisible(false);
+
     auto *size = new QLabel("", w);
     getLabelMap()->insert("size", size);
 
@@ -214,7 +219,7 @@ void setStatusBar(MainWindow *w) {
     statusBar->addWidget(path);
 
     statusBar->addPermanentWidget(size);
-    statusBar->addPermanentWidget(sep3);
+    statusBar->addPermanentWidget(sizeSep);
     statusBar->addPermanentWidget(count);
     statusBar->addPermanentWidget(sep);
     statusBar->addPermanentWidget(crlf);
