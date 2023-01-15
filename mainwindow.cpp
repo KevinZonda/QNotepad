@@ -115,10 +115,10 @@ bool MainWindow::preclose() {
     auto rst = QMessageBox::information(this,
                                         "Change Not Saved",
                                         "Change not saved. Save?",
-                                        QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel,
+                                        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
                                         QMessageBox::Cancel);
-    if (rst == QMessageBox::Cancel) return false;
-    if (rst == QMessageBox::No)     return true;
+    if (rst == QMessageBox::Cancel)  return false;
+    if (rst == QMessageBox::Discard) return true;
     if (hasPath()) {
         this->save();
         return true;
@@ -126,7 +126,6 @@ bool MainWindow::preclose() {
 
     auto path = selectNewFile(nullptr);
     if (path.isEmpty()) {
-        QMessageBox::critical(nullptr, "Cancelled", "User cancelled proecess. Not saved!");
         return false;
     }
 
