@@ -9,6 +9,7 @@ config::config() {
     nativeTitleBar = false;
     lineWrap = false;
     wordWrap = false;
+    isConstructWithParameter = false;
 }
 
 config::~config() {
@@ -32,6 +33,7 @@ config::config(QString json) {
     nativeTitleBar = false;
     lineWrap = false;
     wordWrap = false;
+    isConstructWithParameter = true;
     if (json.isEmpty()) return;
     auto j = QJsonDocument::fromJson(json.toUtf8());
     if (j.isNull()) return;

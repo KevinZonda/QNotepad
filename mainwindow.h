@@ -32,6 +32,7 @@ public:
     void loadConfig();
     void increaseZoom(int v);
     void saveAs();
+    QString getAboutText();
 public slots:
     void onOpenFile(const QString & fileName);
 private:

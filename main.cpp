@@ -141,7 +141,7 @@ void setMenu(MainWindow *w, bool native = true) {
     auto *aboutAct = new QAction("&About", w);
     q->enqueue(aboutAct);
     MainWindow::connect(aboutAct, &QAction::triggered, qApp, [w]{
-        QMessageBox::about(w, "About", "QNotepad\nby KevinZonda\nhttps://github.com/KevinZonda/QNotepad");
+        QMessageBox::about(w, "About", w->getAboutText());
     });
 
 

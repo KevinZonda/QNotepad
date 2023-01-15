@@ -218,7 +218,6 @@ void MainWindow::swapCfg(config *newCfg) {
 
 void MainWindow::loadConfig() {
     auto path = getConfigFile("config.json");
-    qDebug() << path;
     if (!QFile::exists(path)) {
         swapCfg(new config());
         return;
@@ -247,4 +246,15 @@ void MainWindow::saveAs() {
         return;
     }
     setCurrentPath(path);
+}
+
+QString MainWindow::getAboutText() {
+    // config path
+    auto configPath = getConfigFile("config.json");
+    QString about = "QNotepad\n";
+    about += "by KevinZonda\nhttps://github.com/KevinZonda/QNotepad\n";
+    about += "Config Path: " + configPath + "\n";
+    about += "Config Load: ";
+    about += cfg->isConstructWithParameter ? "Yes": "No";
+    return about;
 }

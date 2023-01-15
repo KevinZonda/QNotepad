@@ -13,6 +13,7 @@ public:
     bool nativeTitleBar;
     bool lineWrap;
     bool wordWrap;
+    bool isConstructWithParameter;
     QString toJson();
 };
 
