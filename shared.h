@@ -29,4 +29,8 @@ QMap<QString, QLabel*>* getLabelMap();
 
 QQueue<QAction*>* getAction();
 
+QString getConfigPath();
+
+QString getConfigFile(const QString filename);
+
 #endif // SHARED_H

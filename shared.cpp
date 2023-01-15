@@ -1,6 +1,8 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QQueue>
+#include <QStandardPaths>
+#include <QDir>
 #include "shared.h"
 
 QString currentPath = "";
@@ -58,4 +60,12 @@ QQueue<QAction*> act;
 
 QQueue<QAction*>* getAction() {
     return &act;
+}
+
+QString getConfigPath() {
+    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+}
+
+QString getConfigFile(const QString filename) {
+    return QDir::cleanPath(getConfigPath() + QDir::separator() + filename);
 }

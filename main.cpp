@@ -152,6 +152,14 @@ void setMenu(MainWindow *w, bool native = true) {
         QMessageBox::about(w, "About", w->getAboutText());
     });
 
+    auto *editConfigAct = new QAction("&Edit Config", w);
+    q->enqueue(editConfigAct);
+    MainWindow::connect(editConfigAct, &QAction::triggered, qApp, [w]{
+        if (!w->preclose()) return;
+        setCurrentPath(getConfigFile("config.json"));
+        w->loadFile();
+    });
+
 
     QMenu* menuView = w->menuBar()->addMenu("&View");
 
@@ -201,6 +209,7 @@ void setMenu(MainWindow *w, bool native = true) {
     menuView->addAction(zoomInAct);
     menuView->addAction(zoomOutAct);
 
+    menuHelp->addAction(editConfigAct);
     menuHelp->addAction(aboutAct);
 
     w->menuBar()->addMenu(menuFile);

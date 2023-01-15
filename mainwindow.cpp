@@ -203,15 +203,6 @@ config* MainWindow::getCfg() {
     return cfg;
 }
 
-QString getConfigPath() {
-    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-}
-
-QString getConfigFile(const QString filename)
-{
-    return QDir::cleanPath(getConfigPath() + QDir::separator() + filename);
-}
-
 void MainWindow::swapCfg(config *newCfg) {
     config* c = cfg;
     cfg = newCfg;
