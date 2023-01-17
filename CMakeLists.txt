@@ -29,12 +29,17 @@ set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/notepad.icns")
 set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
 
+set(infoplist "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
+set_source_files_properties(${infoplist} PROPERTIES
+        MACOSX_PACKAGE_LOCATION "")
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(QNotepad
         MACOSX_BUNDLE
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${app_icon_macos}
+        ${infoplist}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QNotepad APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
