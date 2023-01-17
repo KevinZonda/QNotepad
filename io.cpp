@@ -46,13 +46,17 @@ QString fileSize(qint64 size) {
 struct ReadStatus readAllText(QString path) {
     struct ReadStatus x;
     x.text = "";
+    x.ok = false;
 
     QFile f(path);
-
-    if (!f.open(QFile::ReadOnly)) {
-        x.ok = false;
+    x.exists = f.exists();
+    if (!x.exists){
         return x;
     }
+    if (!f.open(QFile::ReadOnly)) {
+        return x;
+    }
+
     QTextStream in(&f);
     x.text = in.readAll();
     x.ok = true;

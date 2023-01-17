@@ -12,6 +12,7 @@ struct ReadStatus {
     QString size;
     QString text;
     bool ok;
+    bool exists;
 };
 
 

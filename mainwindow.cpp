@@ -92,6 +92,13 @@ bool MainWindow::loadFile() {
         getLabelMap()->value("sizeSep")->setVisible(true);
         return true;
     }
+    if (!rs.exists) {
+        auto rst = QMessageBox::information(nullptr, "New file", "File not found. Create new one?",
+                                 QMessageBox::Ok | QMessageBox::Discard, QMessageBox::Discard);
+        if (rst == QMessageBox::Discard) return false;
+        ui->txtContent->clear();
+        return true;
+    }
     QMessageBox::critical(nullptr, "Read failed", "Cannot read specific file!");
     return false;
 }
