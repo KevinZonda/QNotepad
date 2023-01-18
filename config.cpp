@@ -10,6 +10,7 @@ config::config() {
     lineWrap = false;
     wordWrap = false;
     isConstructWithParameter = false;
+    scaleFactor = 5;
 }
 
 config::~config() {
@@ -21,6 +22,7 @@ QString config::toJson() {
     j.insert("font", QJsonArray::fromStringList(*font));
     j.insert("fontSize", fontSize);
     j.insert("nativeTitleBar", nativeTitleBar);
+    j.insert("scaleFactor", scaleFactor);
     j.insert("lineWrap", lineWrap);
     if (lineWrap) j.insert("wordWrap", wordWrap);
     QJsonDocument doc(j);
@@ -34,6 +36,7 @@ config::config(QString json) {
     lineWrap = false;
     wordWrap = false;
     isConstructWithParameter = true;
+    scaleFactor = 5;
     if (json.isEmpty()) return;
     auto j = QJsonDocument::fromJson(json.toUtf8());
     if (j.isNull()) return;
@@ -60,5 +63,9 @@ config::config(QString json) {
     }
     if (lineWrap && o.contains("wordWrap")) {
         wordWrap = o.value("wordWrap").toBool();
+    }
+    if (o.contains("scaleFactor")) {
+        scaleFactor = o.value("scaleFactor").toInt();
+        if (scaleFactor <= 0) scaleFactor = 5;
     }
 }

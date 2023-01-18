@@ -4,8 +4,6 @@
 #include "shared.h"
 #include <QMessageBox>
 #include <QFileInfo>
-#include <QDir>
-#include <QStandardPaths>
 #include <QQueue>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -191,10 +189,10 @@ void MainWindow::setFont(QStringList & families, int size) {
     ui->txtContent->setFont(f);
 }
 
-void MainWindow::increaseZoom(int v) {
+void MainWindow::increaseZoom(bool increase) {
     auto f = ui->txtContent->font();
     auto s = f.pointSize();
-    s += v;
+    s += cfg->scaleFactor * (increase ? 1 : -1);
     if (s < 1) s = 1;
     f.setPointSize(s);
     ui->txtContent->setFont(f);

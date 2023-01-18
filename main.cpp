@@ -134,13 +134,13 @@ void setMenu(MainWindow *w, bool native = true) {
     auto *zoomInAct = new QAction("&Zoom In", w);
     q->enqueue(zoomInAct);
     MainWindow::connect(zoomInAct, &QAction::triggered, qApp, [w]{
-        w->increaseZoom(5);
+        w->increaseZoom(true);
     });
 
     auto *zoomOutAct = new QAction("&Zoom Out", w);
     q->enqueue(zoomOutAct);
     MainWindow::connect(zoomOutAct, &QAction::triggered, qApp, [w]{
-        w->increaseZoom(-5);
+        w->increaseZoom(false);
     });
 
 
@@ -185,7 +185,7 @@ void setMenu(MainWindow *w, bool native = true) {
 
     auto *shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal), w);
     MainWindow::connect(shortcut, &QShortcut::activated, qApp, [w]{
-        w->increaseZoom(5);
+        w->increaseZoom(true);
     });
     zoomOutAct->setShortcut(QKeySequence::ZoomOut);
     exitAct->setShortcut(QKeySequence::Close);

@@ -14,6 +14,7 @@ public:
     bool lineWrap;
     bool wordWrap;
     bool isConstructWithParameter;
+    int scaleFactor;
     QString toJson();
 };
 

@@ -32,7 +32,7 @@ public:
     void setFont(QString font = "", int fontSize = -1);
     config* getCfg();
     void loadConfig();
-    void increaseZoom(int v);
+    void increaseZoom(bool increase);
     void saveAs();
     QString getAboutText();
 public slots:
