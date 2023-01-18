@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(ui->txtContent, &QPlainTextEdit::modificationChanged, this,
                 [this](bool m) {
+                    if (!m) setNextLine(originalNextLine);
                     this->setModify(m);
                 }
     );
@@ -86,6 +87,7 @@ bool MainWindow::loadFile() {
         ui->txtContent->setPlainText(rs.text);
         auto x = getCrLf(rs.text);
         this->setNextLine(x);
+        this->originalNextLine = x;
         getLabelMap()->value("size")->setText(rs.size);
         getLabelMap()->value("sizeSep")->setVisible(true);
         return true;
