@@ -160,6 +160,15 @@ void setMenu(MainWindow *w, bool native = true) {
         w->loadFile();
     });
 
+    auto *reloadCfgAct = new QAction("&Reload Config", w);
+    q->enqueue(reloadCfgAct);
+    MainWindow::connect(reloadCfgAct, &QAction::triggered, qApp, [w]{
+        if (getCurrentPath() == getConfigFile("config.json") && w->getModify()) {
+            w->preclose();
+        }
+        w->loadConfig();
+    });
+
 
     QMenu* menuView = w->menuBar()->addMenu("&View");
 
@@ -210,6 +219,7 @@ void setMenu(MainWindow *w, bool native = true) {
     menuView->addAction(zoomOutAct);
 
     menuHelp->addAction(editConfigAct);
+    menuHelp->addAction(reloadCfgAct);
     menuHelp->addAction(aboutAct);
 
     w->menuBar()->addMenu(menuFile);

@@ -4,6 +4,8 @@
 #include "text.h"
 #include "config.h"
 #include <QMainWindow>
+#include <QEvent>
+#include <QGestureEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
