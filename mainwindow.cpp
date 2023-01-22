@@ -94,8 +94,11 @@ bool MainWindow::loadFile() {
     }
     if (!rs.exists) {
         auto rst = QMessageBox::information(nullptr, "New file", "File not found. Create new one?",
-                                 QMessageBox::Ok | QMessageBox::Discard, QMessageBox::Discard);
-        if (rst == QMessageBox::Discard) return false;
+                                 QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel);
+        if (rst == QMessageBox::Cancel) {
+            setCurrentPath("");
+            return false;
+        }
         ui->txtContent->clear();
         return true;
     }
