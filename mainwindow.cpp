@@ -111,10 +111,8 @@ bool MainWindow::save(QString path) {
     t = this->getNextLine() == CRLF ? toCrLf(t) : toLf(t);
     bool isOk = writeAllText(path, t);
     if (!isOk) return isOk;
+    this->ui->txtContent->document()->setModified(false);
     this->setModify(false);
-    auto cursor = this->ui->txtContent->textCursor();
-    this->loadFile();
-    this->ui->txtContent->setTextCursor(cursor);
     return isOk;
 }
 
