@@ -280,14 +280,12 @@ int main(int argc, char *argv[])
 
     if (argc > 1) {
         QFileInfo fi(argv[1]);
-        if (fi.exists()) {
-            setCurrentPath(fi.absoluteFilePath());
-            w.loadFile();
-        }
+        setCurrentPath(fi.absoluteFilePath());
+        w.loadFile();
     }
 
     w.updateTitle();
-    
+
     txt = w.ui->txtContent;
 
     w.show();
