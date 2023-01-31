@@ -176,6 +176,10 @@ void setMenu(MainWindow *w, bool native = true) {
     auto m = getActionMap();
     m->insert("crlf", toCRLFAct);
     m->insert("lf", toLFAct);
+    m->insert("undo", undoAct);
+    undoAct->setEnabled(false);
+    m->insert("redo", redoAct);
+    redoAct->setEnabled(false);
 
     newAct->setShortcut(QKeySequence::New);
     openAct->setShortcut(QKeySequence::Open);

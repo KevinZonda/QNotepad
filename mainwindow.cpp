@@ -34,6 +34,18 @@ MainWindow::MainWindow(QWidget *parent)
                                  "Ln: " + QString::number(c.blockNumber() + 1) + ", Col: " + QString::number(c.columnNumber() + 1));
                      }
     );
+    QObject::connect(ui->txtContent, &QPlainTextEdit::undoAvailable, this,
+                     [this](bool avail) {
+                         auto m = getActionMap();
+                         m->value("undo")->setEnabled(avail);
+                     }
+    );
+    QObject::connect(ui->txtContent, &QPlainTextEdit::redoAvailable, this,
+                     [this](bool avail) {
+                         auto m = getActionMap();
+                         m->value("redo")->setEnabled(avail);
+                     }
+    );
     loadConfig();
 }
 
