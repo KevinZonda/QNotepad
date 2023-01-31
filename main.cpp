@@ -13,6 +13,7 @@
 #include <QShortcut>
 #include <QLabel>
 #include <QQueue>
+#include <QFileInfo>
 
 static QPlainTextEdit* txt = nullptr;
 
@@ -278,8 +279,11 @@ int main(int argc, char *argv[])
     QObject::connect (&a, &MyApplication::openFile, &w, &MainWindow::onOpenFile);
 
     if (argc > 1) {
-        setCurrentPath(QString(argv[1]));
-        w.loadFile();
+        QFileInfo fi(argv[1]);
+        if (fi.exists()) {
+            setCurrentPath(fi.absoluteFilePath());
+            w.loadFile();
+        }
     }
 
     w.updateTitle();
