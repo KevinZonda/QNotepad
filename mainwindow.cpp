@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(ui->txtContent, &QPlainTextEdit::textChanged, this,
                      [this]() {
-                         getLabelMap()->value("count")->setText("count: " + QString::number(ui->txtContent->toPlainText().length()));
+                         getLabelMap()->value("count")->setText("count: " + QString::number(ui->txtContent->document()->characterCount()-1));
                      }
     );
 
